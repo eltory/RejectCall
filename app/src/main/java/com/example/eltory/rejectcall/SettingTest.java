@@ -2,6 +2,7 @@ package com.example.eltory.rejectcall;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -16,7 +17,8 @@ public class SettingTest extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        //startActivity(new Intent(this, pref_fragment.class));
         getFragmentManager().beginTransaction().replace(android.R.id.content,
-                new pref_fragment()).commit();
+         new pref_fragment()).commit();
     }
 }

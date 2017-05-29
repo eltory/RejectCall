@@ -19,7 +19,5 @@ public class AppInfo extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_inform);
-
-
     }
 }

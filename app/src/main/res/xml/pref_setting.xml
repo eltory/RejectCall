@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
- <PreferenceCategory android:title="자동거부 설정테스트">
+    <PreferenceCategory android:title="자동거부 설정테스트">
 
-     <SwitchPreference
-         android:id="@+id/setReject"
-       android:defaultValue="false"
-       android:key="autoReject"
-       android:summaryOff="전화수신을 자동으로 거부합니다."
-       android:summaryOn="전화수신을 자동으로 거부합니다."
-       android:textSize="16dp"
-       android:title="자동응답거부 설정하기"/>
+        <SwitchPreference
+            android:id="@+id/setReject"
+            android:defaultValue="false"
+            android:key="autoReject"
+            android:summaryOff="전화수신을 자동으로 거부합니다."
+            android:summaryOn="전화수신을 자동으로 거부합니다."
+            android:textSize="16dp"
+            android:title="자동응답거부 설정하기" />
 
-     <SwitchPreference
-         android:id="@+id/setMessage"
-        android:defaultValue="false"
-        android:dependency="autoReject"
-        android:key="autoMessage"
-        android:summaryOff="수신거부에 관한 문자메세지를 보냅니다."
-        android:summaryOn="수신거부에 관한 문자메세지를 보냅니다."
-        android:textSize="16dp"
-        android:title="거부 문자메세지 발송 설정하기"/>
+        <SwitchPreference
+            android:id="@+id/setMessage"
+            android:clickable="false"
+            android:defaultValue="false"
+            android:dependency="autoReject"
+            android:key="autoMessage"
+            android:summary="수신거부에 관한 문자메세지를 보냅니다."
+            android:textSize="16dp"
+            android:title="메세지 거부"
+            android:layout="@layout/pref_custom"/>
 
-    <SwitchPreference
-        android:id="@+id/setTime"
-        android:defaultValue="false"
-        android:dependency="autoReject"
-        android:key="autoTime"
-        android:summaryOff="원하는 요일 및 시간대에만 수신거부를 설정합니다."
-        android:summaryOn="원하는 요일 및 시간대에만 수신거부를 설정합니다."
-        android:textSize="16dp"
-        android:title="요일 및 시간대 설정하기"/>
+        <SwitchPreference
+            android:id="@+id/setTime"
+            android:defaultValue="false"
+            android:dependency="autoReject"
+            android:key="autoTime"
+            android:summaryOff="원하는 요일 및 시간대에만 수신거부를 설정합니다."
+            android:summaryOn="원하는 요일 및 시간대에만 수신거부를 설정합니다."
+            android:textSize="16dp"
+            android:title="요일 및 시간대 설정하기" />
 
-     <SwitchPreference
-         android:id="@+id/setExcNum"
-         android:defaultValue="false"
-         android:dependency="autoReject"
-         android:key="exceptNumber"
-         android:summaryOff="자동읍답 거부모드에도 수신할 번호를 설정합니다."
-         android:summaryOn="자동읍답 거부모드에도 수신할 번호를 설정합니다."
-         android:textSize="16dp"
-         android:title="예외번호 설정하기"
-         />
-     
- </PreferenceCategory>
+        <SwitchPreference
+            android:id="@+id/setExcNum"
+            android:defaultValue="false"
+            android:dependency="autoReject"
+            android:key="exceptNumber"
+            android:summaryOff="자동읍답 거부모드에도 수신할 번호를 설정합니다."
+            android:summaryOn="자동읍답 거부모드에도 수신할 번호를 설정합니다."
+            android:textSize="16dp"
+            android:title="예외번호 설정하기" />
+
+    </PreferenceCategory>
 </PreferenceScreen>

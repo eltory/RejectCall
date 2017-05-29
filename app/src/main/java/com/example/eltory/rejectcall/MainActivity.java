@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         });
         Intent serviceIntent = new Intent(this, CallingService.class);
         serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER,111111111);
-        this.startService(serviceIntent);
+        startService(serviceIntent);
+
         Permissions permissions = new Permissions();
         permissions.permissionCheck(this);
     }

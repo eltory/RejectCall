@@ -59,6 +59,7 @@ public class MsgListViewAdapter extends BaseAdapter {
 
         msgStr = (TextView) convertView.findViewById(R.id.msgStr);
         msgSelect = (CheckBox) convertView.findViewById(R.id.msgSelect);
+        msgStr.setSelected(true);
 
         // Data Set(OptionSettingItem)에서 position 에 위치한 데이터 참조 획득
         final MessageSettingItem messageSettingItem = msgSettingList.get(position);
@@ -95,7 +96,7 @@ public class MsgListViewAdapter extends BaseAdapter {
     }
 
     // Default 아이템 배경바꾸기
-    public void setBG(){
+    public void setBG() {
 
     }
 
