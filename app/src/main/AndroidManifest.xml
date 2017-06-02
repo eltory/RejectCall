@@ -38,8 +38,7 @@
         <activity android:name=".SetMessage" />
         <activity android:name=".SetExceptNumber" />
         <activity android:name=".SetTime" />
-
-        <activity android:name=".SetDetail"/>
+        <activity android:name=".SetDetail" />
         <activity android:name=".SettingTest" />
         <activity android:name=".SensorTest" />
         <activity android:name=".MainActivity">
@@ -107,7 +106,7 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <service
-            android:name=".MyService"
+            android:name=".CallingService_Fragment"
             android:enabled="true"
             android:exported="true"></service>
     </application>

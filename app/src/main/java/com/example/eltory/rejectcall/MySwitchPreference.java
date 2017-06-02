@@ -48,6 +48,8 @@ public class MySwitchPreference extends SwitchPreference {
         titleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // TODO : 각 리스트마다 다른 진입 만들기
                 if (view.equals(view.findViewById(R.id.pref_message)))
                     getContext().startActivity(new Intent(getContext().getApplicationContext(), SetMessage.class));
             }

@@ -12,6 +12,7 @@ import android.os.IBinder;
 public class UnansweredListPopUpService extends Service {
     private BroadcastReceiver broadcastReceiver;
 
+    // TODO : 부재중목록 있을때 팝업 리시버 만들기, 그 후 해제
     @Override
     public void onCreate() {
         super.onCreate();

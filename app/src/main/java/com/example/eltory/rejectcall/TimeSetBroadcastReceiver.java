@@ -23,6 +23,8 @@ public class TimeSetBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        // TODO : 부팅 후 부재중 리스트 리시버 만들기 위함
 /*
         // 부팅 후 BR
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {

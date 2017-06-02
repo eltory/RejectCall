@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 
 public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
 
-    private static String mLastState;
+    private static String mState;
     private String incomingNumber;
 
     @Override
@@ -32,18 +32,18 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
         String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
 
         // BR 2번이상 실행 되는거 방지
-        if (state.equals(mLastState)) {
+        if (state.equals(mState)) {
             return;
         } else {
-            mLastState = state;
+            mState = state;
         }
         incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
 
         // 현재 상태가 전화걸려오는 상태일때
         if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {
             final String phone_number = PhoneNumberUtils.formatNumber(incomingNumber);
-            Intent serviceIntent = new Intent(context, CallingService.class);
-            serviceIntent.putExtra(CallingService.EXTRA_CALL_NUMBER, phone_number);
+            Intent serviceIntent = new Intent(context, CallingService_Fragment.class);
+            serviceIntent.putExtra("incomingNum", phone_number);
             context.startService(serviceIntent);
         }
     }

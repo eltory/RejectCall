@@ -25,6 +25,7 @@ import butterknife.BindView;
  */
 public class SetTime extends AppCompatActivity {
 
+    // TODO : 시간 반복 설정이랑 객체마다 SMS 등 세부 셋팅 지정
     private AlarmManager alarmManager;
     private Intent intent;
     private static int daysOfWeek = 0;
