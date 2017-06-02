@@ -19,6 +19,6 @@ public class SettingTest extends AppCompatActivity {
         context = this;
         //startActivity(new Intent(this, pref_fragment.class));
         getFragmentManager().beginTransaction().replace(android.R.id.content,
-         new pref_fragment()).commit();
+         new OptionPrefActivity()).commit();
     }
 }

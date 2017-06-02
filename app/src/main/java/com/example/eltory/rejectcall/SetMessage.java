@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 
 import android.telecom.Call;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by eltory on 2017-03-18.
  */
 
-public class SetMessage extends AppCompatActivity {
+public class SetMessage extends AppCompatActivity{
 
     public static String msgString;
     public final Context context = this;
@@ -49,7 +50,7 @@ public class SetMessage extends AppCompatActivity {
     ListView msgListView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_message);
         ButterKnife.bind(this);
