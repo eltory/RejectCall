@@ -9,22 +9,26 @@ import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by eltory on 2017-05-18.
  */
+
 
 public class ContactsManager {
 
     private static ContactsManager contactsManager = null;
     private ArrayList person = new ArrayList();  // Contact List in database
 
+
     private ContactsManager() {
     }
 
-    /*  Singleton pattern  */
+    /*  Singleton Instance  */
     public static ContactsManager getInstance() {
         if (contactsManager == null) {
             contactsManager = new ContactsManager();
@@ -37,13 +41,15 @@ public class ContactsManager {
         Cursor cursor = null;
 
         try {
-            Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;  // uri 를 설정해서 폰 주소록 가져올 준비
-            String[] projection = new String[]{  // 주소록 담을 배열 이름, 번호
-                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                    ContactsContract.CommonDataKinds.Phone.NUMBER
-            };
-            String ord = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME;  // 주소록 정렬
-            cursor = context.getContentResolver().query(uri, projection, null, null, ord);  // Cursor 이용 연락처 정보 가져오기
+            // Cursor 이용 연락처 정보 가져오기
+            cursor = context.getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI, // uri 를 설정해서 폰 주소록 가져올 준비
+                    new String[]{  // 주소록 담을 배열 이름, 번호
+                            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                            ContactsContract.CommonDataKinds.Phone.NUMBER},
+                    null,
+                    null,
+                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME); // 주소록 정렬
 
             cursor.moveToFirst();  // Cursor 에 담긴 연락처 정보들 person <List> 에 담기
             do {
@@ -64,7 +70,7 @@ public class ContactsManager {
         return person;
     }
 
-    /*  Get the MissedCallList from Database  */
+    /*  Get the RejectedList from Database  */
     public void getMissedContacts(Context context, String phoneNum) {
         Cursor cursor = null;
         // TODO : missed call list 가져오기
@@ -72,15 +78,27 @@ public class ContactsManager {
             Log.d("진입", "1");
             cursor = context.getContentResolver().query(
                     CallLog.Calls.CONTENT_URI,
-                    null,
+                    new String[]{
+                            CallLog.Calls.CACHED_NAME,
+                            CallLog.Calls.NUMBER,
+                            CallLog.Calls.DATE},
                     CallLog.Calls.TYPE + " = ? AND " + CallLog.Calls.NEW + " = ?",
-                    new String[]{Integer.toString(CallLog.Calls.MISSED_TYPE), "1"},
-                    CallLog.Calls.DATE + " DESC ");/*
-                    new String[]{CallLog.Calls.TYPE},
-                    CallLog.Calls.NUMBER + " = ? AND " + CallLog.Calls.NEW + " = ?",
-                    new String[]{phoneNum, "1"},
-                    CallLog.Calls.DATE + " DESC ");*/
+                    new String[]{
+                            Integer.toString(CallLog.Calls.REJECTED_TYPE),
+                            "1"},
+                    CallLog.Calls.DATE + " DESC ");
+
+            cursor.moveToFirst();
             Log.d("진입----", "cursor.getCount() :" + cursor.getCount());
+
+            if (cursor != null && cursor.getCount() > 0) {
+                SimpleDateFormat simpleFormat = new SimpleDateFormat(
+                        "yyyy-MM-dd HH:mm:ss");
+                String date = simpleFormat.format(new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE))));
+                Log.d("진입----", "cursor :" + cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)));
+                Log.d("진입----", "cursor :" + cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)));
+                Log.d("진입----", "cursor :" + date);
+            }
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -89,10 +107,6 @@ public class ContactsManager {
             cursor.moveToFirst();
             int type = cursor.getInt(0);
             Calendar cal = Calendar.getInstance();
-
-            if (type == CallLog.Calls.MISSED_TYPE) {//&& CallingService.curTime < cal.getTimeInMillis()) {
-                Log.d("부재중", String.valueOf(cursor.getCount()));
-            }
         }
     }
 }

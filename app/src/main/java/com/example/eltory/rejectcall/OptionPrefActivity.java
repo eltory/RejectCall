@@ -23,8 +23,8 @@ public class OptionPrefActivity extends PreferenceFragment {
             public boolean onPreferenceChange(Preference preference, Object o) {
                 Intent it = new Intent(getActivity(), CallingService_Fragment.class);
 
-                //it.putExtra("setOption", "gg");
-                //getActivity().startService(it);
+                it.putExtra("setOption", "gg");
+                getActivity().startService(it);
                 return true;
             }
         });

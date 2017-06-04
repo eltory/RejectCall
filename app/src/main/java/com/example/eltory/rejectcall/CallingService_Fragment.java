@@ -45,6 +45,7 @@ public class CallingService_Fragment extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d("실행...", "Calling 서비스 실행중");
+        setOptions();
     }
 
     @Override
@@ -52,7 +53,6 @@ public class CallingService_Fragment extends Service {
         Log.d("진입...", "Calling 서비스 진입");
         setExtra(intent);
         Log.d("수신 전화번호", incomingNumber);
-
         if (!TextUtils.isEmpty(incomingNumber)) {
             // TODO : String null 값이나 "" 일때수정하기
         }
@@ -67,7 +67,6 @@ public class CallingService_Fragment extends Service {
         // 자동수신거부를 위한 외부번호 인텐트
         if (intent.getStringExtra(EXTRA_CALL_NUMBER) != null) {
             incomingNumber = intent.getStringExtra(EXTRA_CALL_NUMBER);
-            ContactsManager.getInstance().getMissedContacts(this,incomingNumber);
 
             // 수신거절 설정조건문 -> 자동응답거부 설정여부
             if (this.checkedOptions[0]) {
