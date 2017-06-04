@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 
 public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
 
-    private static String mState;
+    private static String mState = null;
     private String incomingNumber;
 
     @Override

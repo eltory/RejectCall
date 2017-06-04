@@ -49,20 +49,12 @@ public class CallingService_Fragment extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("재실행...", "Calling 서비스 실행중");
-
+        Log.d("진입...", "Calling 서비스 진입");
         setExtra(intent);
-        setOptions();
         Log.d("수신 전화번호", incomingNumber);
 
         if (!TextUtils.isEmpty(incomingNumber)) {
             // TODO : String null 값이나 "" 일때수정하기
-        }
-
-        // 수신거절 설정조건문 -> 자동응답거부 설정여부
-        if (this.checkedOptions[0]) {
-            tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            setBlock();
         }
         return START_REDELIVER_INTENT;
     }
@@ -73,11 +65,19 @@ public class CallingService_Fragment extends Service {
             return;
 
         // 자동수신거부를 위한 외부번호 인텐트
-        if (intent.getStringExtra(EXTRA_CALL_NUMBER) != null)
+        if (intent.getStringExtra(EXTRA_CALL_NUMBER) != null) {
             incomingNumber = intent.getStringExtra(EXTRA_CALL_NUMBER);
+            ContactsManager.getInstance().getMissedContacts(this,incomingNumber);
+
+            // 수신거절 설정조건문 -> 자동응답거부 설정여부
+            if (this.checkedOptions[0]) {
+                tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                setBlock();
+            }
+        }
 
         // 설정변화시 서비스에 바로 적용
-        if (intent.getStringArrayExtra(EXTRA_SET_OPTIONS) != null)
+        if (intent.getStringExtra(EXTRA_SET_OPTIONS) != null)
             setOptions();
     }
 
@@ -102,7 +102,7 @@ public class CallingService_Fragment extends Service {
             // 메세지 자동 발송조건문 -> 자동문자 발송 설정여부
             if (this.checkedOptions[1]) {
                 // TODO : 상황에 맞는 메세지 가져오기
-                pref_msg = getSharedPreferences("Message",MODE_PRIVATE);
+                pref_msg = getSharedPreferences("Message", MODE_PRIVATE);
                 sendSMS(incomingNumber, pref_msg.getString("MSG", null));
             }
         } catch (Exception e) {
@@ -137,6 +137,6 @@ public class CallingService_Fragment extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("실행...", "Calling 서비스 종료");
+        Log.d("종료...", "Calling 서비스 종료");
     }
 }
