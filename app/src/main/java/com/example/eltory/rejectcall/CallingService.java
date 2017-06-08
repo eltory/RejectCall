@@ -33,10 +33,10 @@ public class CallingService extends Service {
     private String call_number = "없음";
     public static Context context;
     public static boolean hasList = false;
-    public static UnansweredList un;
+    public static Unanswered un;
     public static long curTime;
     private boolean wakeUp;
-    public static ArrayList<UnansweredList> unansweredLists;
+    public static ArrayList<Unanswered> unansweredLists;
     private ITelephony telephonyService;
     private Set<String> excNum;
     private TelephonyManager tm;
@@ -134,7 +134,7 @@ public class CallingService extends Service {
             }
             String time = arg + ":" + String.valueOf(mm);
 
-            un = new UnansweredList();
+            un = new Unanswered();
             un.setPhoneNum(call_number);
             if (!unansweredLists.contains(un)) {
                 unansweredLists.add(un);

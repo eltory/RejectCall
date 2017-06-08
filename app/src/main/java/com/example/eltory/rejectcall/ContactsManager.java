@@ -1,17 +1,13 @@
 package com.example.eltory.rejectcall;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -22,8 +18,9 @@ import java.util.Date;
 public class ContactsManager {
 
     private static ContactsManager contactsManager = null;
-    private ArrayList person = new ArrayList();  // Contact List in database
-
+    private ArrayList person = null;
+    private Unanswered missedCall;
+    private ArrayList<Unanswered> unansweredLists;
 
     private ContactsManager() {
     }
@@ -37,8 +34,9 @@ public class ContactsManager {
     }
 
     /*  Get ContactList from Database  */
-    public void getContactsList(Context context) {
+    private void contactsList(Context context) {
         Cursor cursor = null;
+        person = new ArrayList();
 
         try {
             // Cursor 이용 연락처 정보 가져오기
@@ -53,7 +51,7 @@ public class ContactsManager {
 
             cursor.moveToFirst();  // Cursor 에 담긴 연락처 정보들 person <List> 에 담기
             do {
-                person.add(cursor.getString(0) + "/" + cursor.getString(1));
+                person.add(cursor.getString(1));
             } while (cursor.moveToNext());
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,14 +63,16 @@ public class ContactsManager {
     }
 
     /*  Return the List to the class which called getList()  */
-    public ArrayList getList(Context context) {
-        getContactsList(context);
+    public ArrayList getContactsList(Context context) {
+        contactsList(context);
         return person;
     }
 
     /*  Get the RejectedList from Database  */
-    public void getMissedContacts(Context context, String phoneNum) {
+    private void missedList(Context context) {
         Cursor cursor = null;
+        unansweredLists = new ArrayList<>();
+
         // TODO : missed call list 가져오기
         try {
             Log.d("진입", "1");
@@ -93,20 +93,30 @@ public class ContactsManager {
 
             if (cursor != null && cursor.getCount() > 0) {
                 SimpleDateFormat simpleFormat = new SimpleDateFormat(
-                        "yyyy-MM-dd HH:mm:ss");
+                        "HH:mm");
                 String date = simpleFormat.format(new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE))));
                 Log.d("진입----", "cursor :" + cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)));
                 Log.d("진입----", "cursor :" + cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)));
                 Log.d("진입----", "cursor :" + date);
+                // if(unansweredLists.contains())
+                missedCall = new Unanswered();
+                missedCall.setName(cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)));
+                missedCall.setPhoneNum(cursor.getColumnName(cursor.getColumnIndex(CallLog.Calls.NUMBER)));
+                missedCall.setCalledTime(date);
+                missedCall.setNumOfCalled(missedCall.getNumOfCalled() + 1);
             }
         } catch (SecurityException e) {
             e.printStackTrace();
         }
         if (cursor != null && cursor.getCount() > 0) {
-            Log.d("진입", "2");
-            cursor.moveToFirst();
-            int type = cursor.getInt(0);
-            Calendar cal = Calendar.getInstance();
+            do {
+
+            } while (cursor.moveToNext());
         }
+    }
+
+    public ArrayList getMissedList(Context context){
+        missedList(context);
+        return unansweredLists;
     }
 }

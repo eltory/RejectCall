@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class Permissions extends Activity {
 
-    // 어플에 필요한 모든 권한 관리
+    /*  All Permissions for the application  */
     public void permissionCheck(Context context) {
         PermissionListener permissionListener = new PermissionListener() {
             @Override

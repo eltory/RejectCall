@@ -3,10 +3,10 @@ package com.example.eltory.rejectcall;
 /**
  * Created by eltor on 2017-05-18.
  */
-public class UnansweredList {
+public class Unanswered {
 
     private String calledTime;
-    private String name = "Test";
+    private String name ;
     private String phoneNum;
     private int numOfCalled = 0;
 

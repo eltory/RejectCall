@@ -1,14 +1,10 @@
 package com.example.eltory.rejectcall;
 
 import android.content.Context;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,7 +16,7 @@ import butterknife.BindView;
  */
 public class UnansweredListAdapter extends BaseAdapter {
 
-    private ArrayList<UnansweredList> unansweredList = new ArrayList<>();
+    private ArrayList<Unanswered> unansweredList = new ArrayList<>();
 
     // 화면에 표시될 View(Layout 이 inflate 된)으로부터 위젯에 대한 참조 획득
     @BindView(R.id.name)
@@ -60,7 +56,7 @@ public class UnansweredListAdapter extends BaseAdapter {
         calledNum = (TextView) convertView.findViewById(R.id.calledNum);
 
         // Data Set(OptionSettingItem)에서 position 에 위치한 데이터 참조 획득
-        final UnansweredList unanswered = unansweredList.get(position);
+        final Unanswered unanswered = unansweredList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         if (unanswered != null) {
@@ -87,8 +83,8 @@ public class UnansweredListAdapter extends BaseAdapter {
     public void addItem() {
 
         if (CallingService.unansweredLists != null) {
-            for (UnansweredList u : CallingService.unansweredLists) {
-                UnansweredList item = new UnansweredList();
+            for (Unanswered u : CallingService.unansweredLists) {
+                Unanswered item = new Unanswered();
 
                 item.setNumOfCalled(u.getNumOfCalled());
                 item.setPhoneNum(u.getPhoneNum());

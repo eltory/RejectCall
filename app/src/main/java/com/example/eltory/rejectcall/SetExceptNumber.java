@@ -27,8 +27,8 @@ import java.util.Set;
 public class SetExceptNumber extends AppCompatActivity {
 
     private static Set<String> exceptNumberSet = new HashSet<>();
-    private ArrayList<String> numberList = new ArrayList<>();
-    private ArrayList person = new ArrayList();
+    private ArrayList numberList;
+    private ArrayList person;
     private final Context context = this;
 
     @Override
@@ -37,13 +37,11 @@ public class SetExceptNumber extends AppCompatActivity {
         setContentView(R.layout.set_exception_num);
 
         ListView lv = (ListView) findViewById(R.id.contact_list);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, ContactsManager.getInstance().getList(context));
-        Log.d("컨텍트 매니저 오브젝트 --------",String.valueOf(ContactsManager.getInstance()));
-        lv.setAdapter(adapter);
+        numberList = ContactsManager.getInstance().getContactsList(this);
     }
 
     public boolean isSavedContacts(String num) {
-        if (person.contains(num))
+        if (numberList.contains(num))
             return true;
         return false;
     }

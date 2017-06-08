@@ -25,7 +25,6 @@ import butterknife.ButterKnife;
 public class MsgListViewAdapter extends BaseAdapter {
 
     private ArrayList<MessageSettingItem> msgSettingList = new ArrayList<>();
-    private int checkedIndex;
 
     // 화면에 표시될 View(Layout 이 inflate 된)으로부터 위젯에 대한 참조 획득
     @BindView(R.id.msgStr)

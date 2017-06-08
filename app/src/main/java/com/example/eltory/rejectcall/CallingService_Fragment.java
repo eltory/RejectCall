@@ -101,6 +101,11 @@ public class CallingService_Fragment extends Service {
             // 메세지 자동 발송조건문 -> 자동문자 발송 설정여부
             if (this.checkedOptions[1]) {
                 // TODO : 상황에 맞는 메세지 가져오기
+                // 모르는번호 메세지 처리하기
+                if (pref_msg.getInt("except", 0) == 1) {
+                    if (ContactsManager.getInstance().getContactsList(this).contains(incomingNumber))
+                        return;
+                }
                 pref_msg = getSharedPreferences("Message", MODE_PRIVATE);
                 sendSMS(incomingNumber, pref_msg.getString("MSG", null));
             }
