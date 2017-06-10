@@ -17,16 +17,20 @@ public class OptionPrefActivity extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.option_pref);
 // TODO : 설정창 프래그먼트로
-        SwitchPreference sm = (SwitchPreference) findPreference("autoReject");
-        sm.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        SwitchPreference sw = (SwitchPreference)findPreference("autoReject");
+        sw.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 Intent it = new Intent(getActivity(), CallingService_Fragment.class);
-
-                it.putExtra("setOption", "gg");
+                it.putExtra("setOption","ok");
                 getActivity().startService(it);
                 return true;
             }
         });
+
+      //  MySwitchPreference m = (MySwitchPreference) findPreference("autoBlock");
+        //SwitchPreference s = (SwitchPreference) findPreference("autoMessage");
+
+       // m.setIntent_(1);
     }
 }

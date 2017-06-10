@@ -39,7 +39,7 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
         }
         incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
         // TODO : ARC 상태진입 시간 이후부터 설정하기
-        ContactsManager.getInstance().getMissedContacts(context,incomingNumber);
+        ContactsManager.getInstance().getMissedList(context);
 
         // 현재 상태가 전화걸려오는 상태일때
         if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {

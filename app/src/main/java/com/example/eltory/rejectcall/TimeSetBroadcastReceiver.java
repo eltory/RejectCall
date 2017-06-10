@@ -1,12 +1,15 @@
 package com.example.eltory.rejectcall;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.IBinder;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telecom.Call;
 import android.util.Log;
@@ -20,6 +23,7 @@ import java.util.Calendar;
 public class TimeSetBroadcastReceiver extends BroadcastReceiver {
 
     private int week;
+    private boolean isOn = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -43,8 +47,24 @@ public class TimeSetBroadcastReceiver extends BroadcastReceiver {
             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
             PackageManager.DONT_KILL_APP)
         }*/
-        ((CallingService) CallingService.context).setAutoRejection(true);
-        Log.d("셋업", String.valueOf(CallingService.chk[0]));
+        if(isOn == false) {
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("autoReject", true).commit();
+            Intent sIntent = new Intent(context, CallingService_Fragment.class);
+            sIntent.putExtra("setOption", "ok");
+            context.startService(sIntent);
+            isOn = true;
+        }else{
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("autoReject", false).commit();
+            Intent sIntent = new Intent(context, CallingService_Fragment.class);
+            sIntent.putExtra("setOption", "ok");
+            context.startService(sIntent);
+            isOn = false;
+        }
+
 
         week = intent.getIntExtra("days", 0);
         //Intent intent_ = new Intent(context, PopUpTest.class);

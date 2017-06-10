@@ -25,10 +25,13 @@ import butterknife.ButterKnife;
 public class TimeTest extends AppCompatActivity {
 
     private AlarmManager alarmManager;
+    private PendingIntent pIntent;
     private Intent intent;
     private static int daysOfWeek = 0;
-    public boolean[] daySet;
-
+    private boolean[] daySet;
+    Calendar cal;
+    Calendar cal_;
+    EditText ed;String n;
     @BindView(R.id.day)
     Button btn;
 
@@ -39,41 +42,39 @@ public class TimeTest extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_time);
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         ButterKnife.bind(this);
+
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        intent = new Intent(this, TimeSetBroadcastReceiver.class);
+        ed = (EditText) findViewById(R.id.editText);
+
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onRegistOneAlarm(TimeTest.this);
+                onRegisterAlarm(TimeTest.this);
+                unregisterComponentCallbacks(TimeTest.this);
             }
         });
-
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onUnregistOneAlarm(TimeTest.this);
+                onUnregisterAlarm(TimeTest.this);
             }
         });
-        //alarmManager.setRepeating();
-        //setDay(1, true);
+
     }
 
-    private void onRegistOneAlarm(Context context) {
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        intent = new Intent(this, TimeSetBroadcastReceiver.class);
+    /*  Register an alarm for setting options */
+    private void onRegisterAlarm(Context context) {
         intent.putExtra("days", daysOfWeek);
-
-        PendingIntent pIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        EditText ed = (EditText)findViewById(R.id.editText);
-        String n = ed.getText().toString();
-        Calendar cal = Calendar.getInstance();
+        pIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        n = ed.getText().toString();
+        cal = Calendar.getInstance();
         cal.set(Calendar.MINUTE, Integer.parseInt(n));
         cal.set(Calendar.SECOND, 0);
-        long interval = 1000 * 60;
 
-        //if (cal.getTimeInMillis() < System.currentTimeMillis()) cal.add(Calendar.DAY_OF_YEAR, 1);
+        long interval = 1000 * 1;
 
         if (Build.VERSION.SDK_INT >= 23) {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pIntent);
@@ -84,17 +85,27 @@ public class TimeTest extends AppCompatActivity {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pIntent);
             }
         }
-
-        //alarmManager.setExactAndAllowWhileIdle();
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), interval, pIntent);
     }
 
-    private void onUnregistOneAlarm(Context context) {
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        intent = new Intent(this, TimeSetBroadcastReceiver.class);
+    /*  Unregister an alarm  */
+    private void onUnregisterAlarm(Context context) {
         intent.putExtra("days", daysOfWeek);
-        PendingIntent pIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        alarmManager.cancel(pIntent);
+        pIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        n = ed.getText().toString();
+        cal_ = Calendar.getInstance();
+        cal_.set(Calendar.MINUTE, Integer.parseInt(n)+1);
+        cal_.set(Calendar.SECOND, 0);
+        if (Build.VERSION.SDK_INT >= 23) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal_.getTimeInMillis(), pIntent);
+
+        } else {
+            if (Build.VERSION.SDK_INT >= 19) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal_.getTimeInMillis(), pIntent);
+            } else {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, cal_.getTimeInMillis(), pIntent);
+            }
+        }
+        //alarmManager.cancel(pIntent);
     }
 
     public void initDaySet() {

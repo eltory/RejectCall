@@ -30,7 +30,7 @@ public class SetTime extends AppCompatActivity {
     private Intent intent;
     private static int daysOfWeek = 0;
     private boolean[] daySet;
-    private boolean isRepeat = false;
+    private boolean repeat = false;
     int h, m;
     @BindView(R.id.day)
     Button btn;
@@ -100,7 +100,7 @@ public class SetTime extends AppCompatActivity {
         c8.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                isRepeat = b;
+                repeat = b;
             }
         });
         initDaySet();
