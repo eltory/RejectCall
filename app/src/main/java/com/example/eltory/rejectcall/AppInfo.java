@@ -9,11 +9,9 @@ import butterknife.BindView;
 /**
  * Created by eltory on 2017-04-23.
  */
-public class AppInfo extends AppCompatActivity{
+public class AppInfo extends AppCompatActivity {
 
-    //@BindView()
-    public static String version = "1.0";
-
+    public static final String version = "1.0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -19,7 +19,8 @@ public class Splash extends Activity {
             @Override
             public void run() {
                 finish();
+                overridePendingTransition(0, 0);
             }
-        }, 2000);
+        }, 3000);
     }
 }

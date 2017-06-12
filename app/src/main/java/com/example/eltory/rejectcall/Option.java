@@ -20,7 +20,7 @@ public class Option extends AppCompatActivity {
 
     public static Context mContext;
     private SharedPreferences pref_option;
-
+/*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +94,7 @@ public class Option extends AppCompatActivity {
 
     /*
      * 액티비티가 저장 될 시기 지정
-     */
+
 
     // 뒤로가기 버튼 눌렀을때 데이터 저장
     @Override
@@ -121,5 +121,5 @@ public class Option extends AppCompatActivity {
         editor.putBoolean("SetTime", CallingService.chk[2]);
         editor.putBoolean("Exception", CallingService.chk[3]);
         editor.commit();
-    }
+    }*/
 }

@@ -1,21 +1,11 @@
 package com.example.eltory.rejectcall;
 
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.IBinder;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
-import android.telecom.Call;
 import android.util.Log;
-import android.widget.Toast;
-
-import java.util.Calendar;
 
 /**
  * Created by eltor on 2017-05-06.
@@ -23,12 +13,33 @@ import java.util.Calendar;
 public class TimeSetBroadcastReceiver extends BroadcastReceiver {
 
     private int week;
-    private boolean isOn = false;
+    private Boolean isOn;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+    Intent sIntent;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        Log.d("리시버 진입","ㅇㅇ");
         // TODO : 부팅 후 부재중 리스트 리시버 만들기 위함
+        week = intent.getIntExtra("days", 0);
+        isOn = intent.getBooleanExtra("isOn", false);
+        Log.d("리시버 진입",String.valueOf(isOn));
+        pref = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = pref.edit();
+        sIntent = new Intent(context, CallingService.class);
+
+        if (isOn) {
+            editor.putBoolean("autoReject", true).commit();
+            Log.d("이즈온","true");
+        } else {
+            editor.putBoolean("autoReject", false).commit();
+            Log.d("이즈온","false");
+        }
+        sIntent.putExtra("setOption", "ok");
+        context.startService(sIntent);
+    }
+}
 /*
         // 부팅 후 BR
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
@@ -47,30 +58,3 @@ public class TimeSetBroadcastReceiver extends BroadcastReceiver {
             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
             PackageManager.DONT_KILL_APP)
         }*/
-        if(isOn == false) {
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean("autoReject", true).commit();
-            Intent sIntent = new Intent(context, CallingService_Fragment.class);
-            sIntent.putExtra("setOption", "ok");
-            context.startService(sIntent);
-            isOn = true;
-        }else{
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean("autoReject", false).commit();
-            Intent sIntent = new Intent(context, CallingService_Fragment.class);
-            sIntent.putExtra("setOption", "ok");
-            context.startService(sIntent);
-            isOn = false;
-        }
-
-
-        week = intent.getIntExtra("days", 0);
-        //Intent intent_ = new Intent(context, PopUpTest.class);
-        //intent_.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        //context.startActivity(intent_);
-        // if(week == 0)
-        //   return;
-    }
-}

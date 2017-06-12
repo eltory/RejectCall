@@ -18,9 +18,9 @@ import java.util.Date;
 public class ContactsManager {
 
     private static ContactsManager contactsManager = null;
+    private ArrayList<Unanswered> unansweredLists;
     private ArrayList person = null;
     private Unanswered missedCall;
-    private ArrayList<Unanswered> unansweredLists;
 
     private ContactsManager() {
     }

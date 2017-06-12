@@ -4,15 +4,8 @@ package com.example.eltory.rejectcall;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
-import android.util.Log;
-
-import com.android.internal.telephony.ITelephony;
-
-import java.lang.reflect.Method;
 
 /**
  * Created by eltory on 2017-03-07.
@@ -44,7 +37,7 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
         // 현재 상태가 전화걸려오는 상태일때
         if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {
             final String phone_number = PhoneNumberUtils.formatNumber(incomingNumber);
-            Intent serviceIntent = new Intent(context, CallingService_Fragment.class);
+            Intent serviceIntent = new Intent(context, CallingService.class);
             serviceIntent.putExtra("incomingNum", phone_number);
             context.startService(serviceIntent);
         }

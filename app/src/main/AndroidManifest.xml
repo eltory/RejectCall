@@ -40,7 +40,6 @@
         <activity android:name=".SetTime" />
         <activity android:name=".SetDetail" />
         <activity android:name=".SettingTest" />
-        <activity android:name=".SensorTest" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -105,10 +104,6 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
 
-        <service
-            android:name=".CallingService_Fragment"
-            android:enabled="true"
-            android:exported="true"></service>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -30,11 +31,11 @@ public class TimeTest extends AppCompatActivity {
     private static int daysOfWeek = 0;
     private boolean[] daySet;
     Calendar cal;
-    Calendar cal_;
-    EditText ed;String n;
+    EditText ed;
+    String n;
+
     @BindView(R.id.day)
     Button btn;
-
     @BindView(R.id.days)
     Button btn2;
 
@@ -48,34 +49,34 @@ public class TimeTest extends AppCompatActivity {
         intent = new Intent(this, TimeSetBroadcastReceiver.class);
         ed = (EditText) findViewById(R.id.editText);
 
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onRegisterAlarm(TimeTest.this);
-                unregisterComponentCallbacks(TimeTest.this);
+                n = ed.getText().toString();
+
+                cal = Calendar.getInstance();
+                //
+                setTime(cal, Integer.parseInt(n));
+                onRegisterAlarm(0, true);
+                setTime(cal, Integer.parseInt(n) + 1);
+                onRegisterAlarm(1, false);
             }
         });
+
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onUnregisterAlarm(TimeTest.this);
+                onUnregisterAlarm();
             }
         });
-
     }
 
     /*  Register an alarm for setting options */
-    private void onRegisterAlarm(Context context) {
-        intent.putExtra("days", daysOfWeek);
-        pIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        n = ed.getText().toString();
-        cal = Calendar.getInstance();
-        cal.set(Calendar.MINUTE, Integer.parseInt(n));
-        cal.set(Calendar.SECOND, 0);
+    private void onRegisterAlarm(int requestCode, Boolean isOn) {
+        intent.putExtra("isOn", isOn);
+        pIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        long interval = 1000 * 1;
-
+        // SDK 버전별로 정확한 시간에 작동시키기
         if (Build.VERSION.SDK_INT >= 23) {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pIntent);
         } else {
@@ -88,24 +89,15 @@ public class TimeTest extends AppCompatActivity {
     }
 
     /*  Unregister an alarm  */
-    private void onUnregisterAlarm(Context context) {
-        intent.putExtra("days", daysOfWeek);
+    private void onUnregisterAlarm() {
         pIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        n = ed.getText().toString();
-        cal_ = Calendar.getInstance();
-        cal_.set(Calendar.MINUTE, Integer.parseInt(n)+1);
-        cal_.set(Calendar.SECOND, 0);
-        if (Build.VERSION.SDK_INT >= 23) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal_.getTimeInMillis(), pIntent);
+        alarmManager.cancel(pIntent);
+    }
 
-        } else {
-            if (Build.VERSION.SDK_INT >= 19) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal_.getTimeInMillis(), pIntent);
-            } else {
-                alarmManager.set(AlarmManager.RTC_WAKEUP, cal_.getTimeInMillis(), pIntent);
-            }
-        }
-        //alarmManager.cancel(pIntent);
+    /*  Set start & finish time  */
+    public void setTime(Calendar cal, int atTime) {
+        cal.set(Calendar.MINUTE, atTime);
+        cal.set(Calendar.SECOND, 0);
     }
 
     public void initDaySet() {

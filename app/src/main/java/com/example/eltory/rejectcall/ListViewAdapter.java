@@ -72,7 +72,7 @@ public class ListViewAdapter extends BaseAdapter {
             optionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    CallingService.chk[pos] = b;
+                    //CallingService.chk[pos] = b;
                 }
             });
         }

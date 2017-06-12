@@ -82,16 +82,6 @@ public class UnansweredListAdapter extends BaseAdapter {
     // 아이템 데이터 추가를 위한 함수, 개발자가 원하는대로 작성 가능
     public void addItem() {
 
-        if (CallingService.unansweredLists != null) {
-            for (Unanswered u : CallingService.unansweredLists) {
-                Unanswered item = new Unanswered();
 
-                item.setNumOfCalled(u.getNumOfCalled());
-                item.setPhoneNum(u.getPhoneNum());
-                item.setCalledTime(u.getCalledTime());
-
-                unansweredList.add(item);
-            }
-        }
     }
 }

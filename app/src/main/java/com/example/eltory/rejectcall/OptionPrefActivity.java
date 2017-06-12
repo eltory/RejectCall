@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
-import android.util.Log;
 
 /**
  * Created by eltor on 2017-05-30.
@@ -21,7 +20,7 @@ public class OptionPrefActivity extends PreferenceFragment {
         sw.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
-                Intent it = new Intent(getActivity(), CallingService_Fragment.class);
+                Intent it = new Intent(getActivity(), CallingService.class);
                 it.putExtra("setOption","ok");
                 getActivity().startService(it);
                 return true;
