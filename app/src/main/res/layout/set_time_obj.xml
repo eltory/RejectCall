@@ -85,6 +85,19 @@
     </LinearLayout>
 
     <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="반복 설정하기"
+            android:id="@+id/textView4" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/start_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

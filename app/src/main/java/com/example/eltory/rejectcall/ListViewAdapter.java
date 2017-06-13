@@ -22,7 +22,7 @@ import butterknife.BindView;
  */
 public class ListViewAdapter extends BaseAdapter {
 
-    private ArrayList<OptionSettingItem> optionSettingList = new ArrayList<>();
+    private ArrayList<TimeObj> optionSettingList = new ArrayList<>();
 
     // 화면에 표시될 View(Layout 이 inflate 된)으로부터 위젯에 대한 참조 획득
     @BindView(R.id.descStr)
@@ -61,13 +61,13 @@ public class ListViewAdapter extends BaseAdapter {
         optionSwitch = (Switch) convertView.findViewById(R.id.setSwitch);
 
         // Data Set(OptionSettingItem)에서 position 에 위치한 데이터 참조 획득
-        final OptionSettingItem optionSettingItem = optionSettingList.get(position);
+        final TimeObj optionSettingItem = optionSettingList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         if (optionSettingItem != null) {
-            title.setText(optionSettingItem.getTitleStr());
-            desc.setText(optionSettingItem.getDescStr());
-            optionSwitch.setChecked(optionSettingItem.getChkSwitch());
+            title.setText(optionSettingItem.getStartTime()+"/"+optionSettingItem.getEndTime());
+            desc.setText(optionSettingItem.getWeekSet());
+            optionSwitch.setChecked(false);
 
             optionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -92,13 +92,9 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수, 개발자가 원하는대로 작성 가능
-    public void addItem(String title, String desc, boolean optionSwitch) {
-        OptionSettingItem item = new OptionSettingItem();
-
-        item.setTitleStr(title);
-        item.setDescStr(desc);
-        item.setChkSwitch(optionSwitch);
-
-        optionSettingList.add(item);
+    public void addItem(TimeObj timeObj) {
+        if (!optionSettingList.contains(timeObj)) {
+            optionSettingList.add(timeObj);
+        }
     }
 }

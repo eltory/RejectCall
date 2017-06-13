@@ -39,7 +39,7 @@
         <activity android:name=".SetMessage" />
         <activity android:name=".SetExceptNumber" />
         <activity android:name=".SetTime" />
-        <activity android:name=".SetDetail" />
+        <activity android:name=".SetTimeObject" />
         <activity android:name=".SettingTest" />
         <activity android:name=".MainActivity">
             <intent-filter>

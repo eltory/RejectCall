@@ -66,9 +66,8 @@ public class MySwitchPreference extends SwitchPreference {
         else if (this.num == 2)
             getContext().startActivity(new Intent(getContext(), SetTime.class));
         else if (this.num == 3)
-            getContext().startActivity(new Intent(getContext(), TimeTest.class));
+            getContext().startActivity(new Intent(getContext(), SetExceptNumber.class));
         else
-            getContext().startActivity(new Intent(getContext(), SetDetail.class));
-            ;
+            getContext().startActivity(new Intent(getContext(), SetTime.class));
     }
 }

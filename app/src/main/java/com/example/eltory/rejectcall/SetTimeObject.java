@@ -15,6 +15,7 @@ import android.widget.ToggleButton;
 
 import com.example.eltory.rejectcall.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -22,7 +23,7 @@ import butterknife.BindView;
 /**
  * Created by eltory on 2017-04-23.
  */
-public class SetDetail extends AppCompatActivity {
+public class SetTimeObject extends AppCompatActivity {
 
     private AlarmManager alarmManager;
     private PendingIntent pIntent;
@@ -30,6 +31,8 @@ public class SetDetail extends AppCompatActivity {
     private ToggleButton toggleSun, toggleMon, toggleTue, toggleWed, toggleThu, toggleFri, toggleSat;
     private int weekSet = 0;
     private Calendar cal;
+    private long startTime;
+    private long endTime;
     TimePicker start;
     TimePicker end;
 
@@ -58,12 +61,18 @@ public class SetDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 cal = Calendar.getInstance();
+                // TODO:request 코드 받아오기
+
                 // 시작
                 setTime(cal, start);
+                startTime = cal.getTimeInMillis();
                 onRegisterAlarm(0, true);
                 // 종료
                 setTime(cal, end);
+                endTime = cal.getTimeInMillis();
                 onRegisterAlarm(1, false);
+                TimeObjectManager.getInstance().addTimeObj(makeTimeObj());
+                finish();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +94,7 @@ public class SetDetail extends AppCompatActivity {
             setDay(i, b);
             i++;
         }
-        intent.putExtra("week",weekSet);
+        intent.putExtra("week", weekSet);
         intent.putExtra("isOn", isOn);
         pIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -123,6 +132,17 @@ public class SetDetail extends AppCompatActivity {
         cal.set(Calendar.SECOND, 0);
     }
 
+    public TimeObj makeTimeObj() {
+        TimeObj timeObj = new TimeObj();
+        timeObj.setStartTime(startTime);
+        timeObj.setEndTime(endTime);
+        timeObj.setWeekSet(weekSet);
+        timeObj.setRequestCodeSet(new int[]{0, 1});
+
+        return timeObj;
+    }
+
+    // TODO: repeat 설정하기
     public void repeatAlarm() {
 
     }
