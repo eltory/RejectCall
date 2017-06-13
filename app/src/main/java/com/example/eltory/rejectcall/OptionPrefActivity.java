@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 
 /**
@@ -11,25 +12,54 @@ import android.preference.SwitchPreference;
  */
 public class OptionPrefActivity extends PreferenceFragment {
 
+    private Intent it;
+    SwitchPreference autoReject;
+    SwitchPreference block;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.option_pref);
-// TODO : 설정창 프래그먼트로
-        SwitchPreference sw = (SwitchPreference)findPreference("autoReject");
-        sw.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+        /*  Set auto reject  */
+        autoReject = (SwitchPreference) findPreference("autoReject");
+        autoReject.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
-                Intent it = new Intent(getActivity(), CallingService.class);
-                it.putExtra("setOption","ok");
+                it = new Intent(getActivity(), CallingService.class);
+                it.putExtra("setOption", "ok");
                 getActivity().startService(it);
                 return true;
             }
         });
 
-      //  MySwitchPreference m = (MySwitchPreference) findPreference("autoBlock");
-        //SwitchPreference s = (SwitchPreference) findPreference("autoMessage");
+        block = (SwitchPreference)findPreference("autoBlock");
+        block.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
 
-       // m.setIntent_(1);
+                return true;
+            }
+        });
+
+        /*  Set each entrance */
+        MySwitchPreference autoMessage = (MySwitchPreference) findPreference("autoMessage");
+        autoMessage.setNum(1);
+        MySwitchPreference autoTime = (MySwitchPreference) findPreference("autoTime");
+        autoTime.setNum(2);
+        MySwitchPreference exceptNumber = (MySwitchPreference) findPreference("exceptNumber");
+        exceptNumber.setNum(3);
+        MySwitchPreference autoBlock = (MySwitchPreference) findPreference("autoBlock");
+        autoBlock.setNum(0);
+    }
+
+    public void setCheck(){
+        autoReject.setChecked(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("autoReject", false));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        autoReject.setChecked(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("autoReject", false));
     }
 }

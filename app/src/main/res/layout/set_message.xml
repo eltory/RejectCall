@@ -9,19 +9,39 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:text="모르는 번호는 문자보내기 제외"
-            android:id="@+id/textView4"
+            android:id="@+id/set_msg_except_view"
             android:layout_weight="4" />
 
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:id="@+id/set_msg_except"
+            android:layout_gravity="right"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="같은번호 문자 2번 이상 보내지 않기"
+            android:id="@+id/set_no_duplicate_view"
+            android:layout_weight="4" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/set_no_duplicate"
             android:layout_gravity="right"
             android:layout_weight="1" />
 

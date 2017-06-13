@@ -16,6 +16,9 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.eltory.rejectcall.ContactsManager;
+import com.example.eltory.rejectcall.R;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

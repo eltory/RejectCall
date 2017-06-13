@@ -1,5 +1,6 @@
 package com.example.eltory.rejectcall;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.preference.SwitchPreference;
@@ -17,14 +18,14 @@ import android.view.ViewGroup;
 
 public class MySwitchPreference extends SwitchPreference {
 
+    private int num;
+
     public MySwitchPreference(Context context) {
         super(context);
     }
-
     public MySwitchPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
     public MySwitchPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
@@ -32,27 +33,42 @@ public class MySwitchPreference extends SwitchPreference {
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
+
+        ViewGroup vg = (ViewGroup) view;
+        RelativeLayout titleView = (RelativeLayout) vg.getChildAt(1);
         TextView title = (TextView) view.findViewById(android.R.id.title);
         title.setTextSize(18);
         //title.setTextColor(getContext().getResources().getColor(R.color.title));
 
-        ViewGroup vg = (ViewGroup) view;
-        RelativeLayout titleView = (RelativeLayout) vg.getChildAt(1);
+        // Ripple 효과주기
         TypedValue outValue = new TypedValue();
-        getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+        getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, outValue, true);
         titleView.setBackgroundResource(outValue.resourceId);
-
-        Log.d("마이view", String.valueOf(view));
-        // Log.d("마이msg",String.valueOf());
 
         titleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // TODO : 각 리스트마다 다른 진입 만들기
-                if (view.equals(view.findViewById(R.id.pref_message)))
-                    getContext().startActivity(new Intent(getContext().getApplicationContext(), SetMessage.class));
+                setGoIntent();
             }
         });
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    /*  Set each entrance */
+    public void setGoIntent() {
+        Log.d("진입완료", "선택");
+
+        if (this.num == 1)
+            getContext().startActivity(new Intent(getContext(), SetMessage.class));
+        else if (this.num == 2)
+            getContext().startActivity(new Intent(getContext(), SetTime.class));
+        else if (this.num == 3)
+            getContext().startActivity(new Intent(getContext(), TimeTest.class));
+        else
+            getContext().startActivity(new Intent(getContext(), SetDetail.class));
+            ;
     }
 }

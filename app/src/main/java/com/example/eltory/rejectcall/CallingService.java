@@ -17,6 +17,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.internal.telephony.ITelephony;
+import com.example.eltory.rejectcall.ContactsManager;
 
 import java.lang.reflect.Method;
 
@@ -30,7 +31,6 @@ public class CallingService extends Service {
     private String incomingNumber = "없음";
     private TelephonyManager tm;
     private ITelephony telephonyService;
-
     private SharedPreferences pref_option;
     private SharedPreferences pref_msg;
     private SharedPreferences pref_except;
