@@ -13,7 +13,7 @@ public class TimeObj {
     private long endTime;
     private boolean repeat = false;
     private int[] requestCodeSet;
-    SimpleDateFormat simpleFormat = new SimpleDateFormat("HH:mm");
+    //SimpleDateFormat simpleFormat = new SimpleDateFormat("HH:mm");
 
     TimeObj() {
     }
@@ -25,24 +25,23 @@ public class TimeObj {
     public String getWeekSet() {
         String days = "";
 
-        for(int i = 0; i < 7; i++){
-        if(getDay(i))
-        {
-            if(i == 6)
-                days+=" 토 ";
-            if(i == 5)
-                days+=" 금 ";
-            if(i == 4)
-                days+=" 목 ";
-            if(i == 3)
-                days+=" 수 ";
-            if(i == 2)
-                days+=" 화 ";
-            if(i == 1)
-                days+=" 월 ";
-            if(i == 0)
-                days+=" 일 ";
-        }
+        for (int i = 0; i < 7; i++) {
+            if (getDay(i)) {
+                if (i == 6)
+                    days += " 토 ";
+                if (i == 5)
+                    days += " 금 ";
+                if (i == 4)
+                    days += " 목 ";
+                if (i == 3)
+                    days += " 수 ";
+                if (i == 2)
+                    days += " 화 ";
+                if (i == 1)
+                    days += " 월 ";
+                if (i == 0)
+                    days += " 일 ";
+            }
         }
         return days;
     }
@@ -51,16 +50,16 @@ public class TimeObj {
         this.startTime = startTime;
     }
 
-    public String getStartTime() {
-        return simpleFormat.format(new Date(startTime));
+    public long getStartTime() {
+        return startTime;
     }
 
     public void setEndTime(long endTime) {
         this.endTime = endTime;
     }
 
-    public String getEndTime() {
-        return simpleFormat.format(new Date(endTime));
+    public long getEndTime() {
+        return endTime;
     }
 
     public void setRepeat(boolean b) {
@@ -87,9 +86,9 @@ public class TimeObj {
         int temp = weekSet;
 
         if (((temp >> day) & 1) == 1) {
-            return true;                    // 선택한 요일이 '1'이면 true 반환
+            return true;
         } else {
-            return false;                   // 선택한 요일이 '0'이면 false 반환
+            return false;
         }
     }
 }

@@ -120,6 +120,7 @@ public class SetTimeObject extends AppCompatActivity {
     public void setTime(Calendar cal, TimePicker timePicker) {
         int atHour, atMinute;
 
+        // SDK 버전에 따른 time picker 시간 가져오기
         if (Build.VERSION.SDK_INT >= 23) {
             atHour = timePicker.getHour();
             atMinute = timePicker.getMinute();
@@ -132,6 +133,7 @@ public class SetTimeObject extends AppCompatActivity {
         cal.set(Calendar.SECOND, 0);
     }
 
+    // TimeObject 생성
     public TimeObj makeTimeObj() {
         TimeObj timeObj = new TimeObj();
         timeObj.setStartTime(startTime);

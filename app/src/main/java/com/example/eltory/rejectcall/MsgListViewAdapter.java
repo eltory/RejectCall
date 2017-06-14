@@ -94,11 +94,6 @@ public class MsgListViewAdapter extends BaseAdapter {
         msgSettingList.add(item);
     }
 
-    // Default 아이템 배경바꾸기
-    public void setBG() {
-
-    }
-
     // 아이템 데이터 삭제
     public void removeItem(int idx) {
         msgSettingList.remove(idx);

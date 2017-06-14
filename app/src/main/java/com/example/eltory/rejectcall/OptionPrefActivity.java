@@ -60,6 +60,6 @@ public class OptionPrefActivity extends PreferenceFragment {
     @Override
     public void onResume() {
         super.onResume();
-        autoReject.setChecked(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("autoReject", false));
+        setCheck();
     }
 }

@@ -34,6 +34,7 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
+        <activity android:name=".AppInfo"/>
         <activity android:name=".Option" />
         <activity android:name=".TimeTest" />
         <activity android:name=".SetMessage" />
@@ -41,7 +42,9 @@
         <activity android:name=".SetTime" />
         <activity android:name=".SetTimeObject" />
         <activity android:name=".SettingTest" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/MyAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

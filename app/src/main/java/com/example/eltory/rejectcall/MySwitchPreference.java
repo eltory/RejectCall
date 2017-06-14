@@ -59,8 +59,6 @@ public class MySwitchPreference extends SwitchPreference {
 
     /*  Set each entrance */
     public void setGoIntent() {
-        Log.d("진입완료", "선택");
-
         if (this.num == 1)
             getContext().startActivity(new Intent(getContext(), SetMessage.class));
         else if (this.num == 2)

@@ -1,5 +1,8 @@
 package com.example.eltory.rejectcall;
 
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,13 +15,16 @@ import java.util.Calendar;
 /**
  * Created by eltor on 2017-05-06.
  */
+@TargetApi(16)
 public class TimeSetBroadcastReceiver extends BroadcastReceiver {
 
     private int week;
     private boolean isOn;
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
-    Intent sIntent;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+    private Intent sIntent;
+    private Notification notification;
+    private NotificationManager nm;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -28,6 +34,7 @@ public class TimeSetBroadcastReceiver extends BroadcastReceiver {
         week = intent.getIntExtra("week", 0);
         isOn = intent.getBooleanExtra("isOn", false);
         sIntent = new Intent(context, CallingService.class);
+        nm = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         Calendar cal = Calendar.getInstance();
 
         // 오늘의 요일이 설정되어 있지 않으면 리턴
@@ -36,21 +43,37 @@ public class TimeSetBroadcastReceiver extends BroadcastReceiver {
 
         if (isOn) {
             editor.putBoolean("autoReject", true).commit();
+            notification = new Notification.Builder(context)
+                    .setAutoCancel(false)
+                    .setContentTitle("시작시간  00:00 ~ 종료시간  00:00") // TODO: 각 알람마다 시작,종료시간 가져오기
+                    .setContentText("자동수신 거부 중입니다.")
+                    .setSmallIcon(getNotificationIcon())
+                    .build();
+            notification.flags = Notification.FLAG_NO_CLEAR;
+            nm.notify(111, notification);
+
         } else {
             editor.putBoolean("autoReject", false).commit();
+            nm.cancel(111);
         }
-
         sIntent.putExtra("setOption", "ok");
         context.startService(sIntent);
     }
 
+    /*  Notification icon setting  */
+    private int getNotificationIcon() {
+        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
+        return useWhiteIcon ? R.drawable.banana : R.drawable.banana;
+    }
+
+    /*  Get the day's bit of week  */
     public boolean getDay(int day) {
         int temp = week;
 
         if (((temp >> day) & 1) == 1) {
-            return true;                    // 선택한 요일이 '1'이면 true 반환
+            return true;
         } else {
-            return false;                   // 선택한 요일이 '0'이면 false 반환
+            return false;
         }
     }
 }
