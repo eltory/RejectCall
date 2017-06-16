@@ -1,5 +1,6 @@
 package com.example.eltory.rejectcall;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Path;
@@ -88,5 +89,3 @@ public class ListViewAdapter extends BaseAdapter {
         TimeObjectManager.getInstance().removeTimeObj((TimeObj) getItem(position));
     }
 }
-/*
-* 노티 푸쉬아람 만들기 */

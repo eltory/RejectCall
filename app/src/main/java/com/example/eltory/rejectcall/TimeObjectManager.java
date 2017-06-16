@@ -3,7 +3,9 @@ package com.example.eltory.rejectcall;
 import android.content.Context;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by eltor on 2017-06-13.
@@ -15,6 +17,7 @@ public class TimeObjectManager {
     private ListTimeObj timeObjs;
     private ComplexPreferences complexPreferences;
     private Context context = null;
+    SimpleDateFormat simpleFormat = new SimpleDateFormat("HH:mm");
 
     private TimeObjectManager() {
         timeObjs = new ListTimeObj();
@@ -41,6 +44,14 @@ public class TimeObjectManager {
         setTimeObjs();
     }
 
+    public String getStartEndTime(int requestCode) {
+        return simpleFormat.format(new Date(findTimeObj(requestCode).getStartTime())) + "/" + simpleFormat.format(new Date(findTimeObj(requestCode).getEndTime()));
+    }
+
+    public TimeObj findTimeObj(int requestCode) {
+        return this.timeObjs.getTimeObj(requestCode);
+    }
+
     /*  Save the data object by using GSON for serializing an object to JSON  */
     public void setTimeObjs() {
         complexPreferences.putObject("timeList", timeObjs);
@@ -55,8 +66,8 @@ public class TimeObjectManager {
 
         if (timeObjs == null) {
             list = new ArrayList<>();
-            timeObjs = new ListTimeObj();
-            timeObjs.setList(list);
+            this.timeObjs = new ListTimeObj();
+            this.timeObjs.setList(list);
             setTimeObjs();
         }
         return this.timeObjs;

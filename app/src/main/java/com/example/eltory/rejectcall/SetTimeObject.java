@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
@@ -33,6 +34,7 @@ public class SetTimeObject extends AppCompatActivity {
     private Calendar cal;
     private long startTime;
     private long endTime;
+    private int[] requestCode;
     TimePicker start;
     TimePicker end;
 
@@ -62,15 +64,17 @@ public class SetTimeObject extends AppCompatActivity {
             public void onClick(View view) {
                 cal = Calendar.getInstance();
                 // TODO:request 코드 받아오기
-
+                requestCode = new int[]{(int) System.currentTimeMillis(), (int) System.currentTimeMillis() + 1};
+                Log.d("시작", String.valueOf(requestCode[0]));
+                Log.d("종료", String.valueOf(requestCode[1]));
                 // 시작
                 setTime(cal, start);
                 startTime = cal.getTimeInMillis();
-                onRegisterAlarm(0, true);
+                onRegisterAlarm(requestCode[0], true);
                 // 종료
                 setTime(cal, end);
                 endTime = cal.getTimeInMillis();
-                onRegisterAlarm(1, false);
+                onRegisterAlarm(requestCode[1], false);
                 TimeObjectManager.getInstance().addTimeObj(makeTimeObj());
                 finish();
             }
@@ -96,6 +100,7 @@ public class SetTimeObject extends AppCompatActivity {
         }
         intent.putExtra("week", weekSet);
         intent.putExtra("isOn", isOn);
+        intent.putExtra("time", requestCode);
         pIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // SDK 버전별로 정확한 시간에 작동시키기
@@ -111,8 +116,8 @@ public class SetTimeObject extends AppCompatActivity {
     }
 
     /*  Unregister an alarm  */
-    private void onUnregisterAlarm() {
-        pIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+    private void onUnregisterAlarm(int requestCode) {
+        pIntent = PendingIntent.getBroadcast(this, requestCode, intent, 0);
         alarmManager.cancel(pIntent);
     }
 
@@ -139,7 +144,7 @@ public class SetTimeObject extends AppCompatActivity {
         timeObj.setStartTime(startTime);
         timeObj.setEndTime(endTime);
         timeObj.setWeekSet(weekSet);
-        timeObj.setRequestCodeSet(new int[]{0, 1});
+        timeObj.setRequestCodeSet(requestCode);
 
         return timeObj;
     }

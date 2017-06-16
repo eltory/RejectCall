@@ -5,160 +5,166 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/day_set"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="7">
+        android:layout_height="match_parent">
 
-        <ToggleButton
-            android:id="@+id/sun"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/toggle_selector"
-            android:text="Sunday"
-            android:textOff=""
-            android:textOn="" />
-
-        <ToggleButton
-            android:id="@+id/mon"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/toggle_selector"
-            android:text="Monday"
-            android:textOff=""
-            android:textOn="" />
-
-        <ToggleButton
-            android:id="@+id/tue"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/toggle_selector"
-            android:text="Tuesday"
-            android:textOff=""
-            android:textOn="" />
-
-        <ToggleButton
-            android:id="@+id/wed"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/toggle_selector"
-            android:text="Wednesday"
-            android:textOff=""
-            android:textOn="" />
-
-        <ToggleButton
-            android:id="@+id/thu"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/toggle_selector"
-            android:text="Thursday"
-            android:textOff=""
-            android:textOn="" />
-
-        <ToggleButton
-            android:id="@+id/fri"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/toggle_selector"
-            android:text="Friday"
-            android:textOff=""
-            android:textOn="" />
-
-        <ToggleButton
-            android:id="@+id/sat"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/toggle_selector"
-            android:text="Saturday"
-            android:textOff=""
-            android:textOn="" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/day_set"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="반복 설정하기"
-            android:id="@+id/textView4" />
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="7">
 
-    </LinearLayout>
+            <ToggleButton
+                android:id="@+id/sun"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_selector"
+                android:text="Sunday"
+                android:textOff=""
+                android:textOn="" />
 
-    <LinearLayout
-        android:id="@+id/start_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <ToggleButton
+                android:id="@+id/mon"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_selector"
+                android:text="Monday"
+                android:textOff=""
+                android:textOn="" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+            <ToggleButton
+                android:id="@+id/tue"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_selector"
+                android:text="Tuesday"
+                android:textOff=""
+                android:textOn="" />
+
+            <ToggleButton
+                android:id="@+id/wed"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_selector"
+                android:text="Wednesday"
+                android:textOff=""
+                android:textOn="" />
+
+            <ToggleButton
+                android:id="@+id/thu"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_selector"
+                android:text="Thursday"
+                android:textOff=""
+                android:textOn="" />
+
+            <ToggleButton
+                android:id="@+id/fri"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_selector"
+                android:text="Friday"
+                android:textOff=""
+                android:textOn="" />
+
+            <ToggleButton
+                android:id="@+id/sat"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_selector"
+                android:text="Saturday"
+                android:textOff=""
+                android:textOn="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="반복 설정하기"
+                android:id="@+id/textView4" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/start_time"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="시작시간"
-            android:textSize="15dp" />
+            android:orientation="horizontal">
 
-        <TimePicker
-            android:id="@+id/start_time_picker"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="시작시간"
+                android:textSize="15dp" />
+
+            <TimePicker
+                android:id="@+id/start_time_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numbersInnerTextColor="#00a941"
+                android:timePickerMode="spinner" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/end_time"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:numbersInnerTextColor="#00a941"
-            android:timePickerMode="spinner" />
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="종료시간"
+                android:textSize="15dp" />
 
-    <LinearLayout
-        android:id="@+id/end_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+            <TimePicker
+                android:id="@+id/end_time_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="종료시간"
-            android:textSize="15dp" />
+            android:layout_gravity="bottom|center_horizontal"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <TimePicker
-            android:id="@+id/end_time_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:timePickerMode="spinner" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="확인" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="확인" />
-
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="취소" />
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="취소" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

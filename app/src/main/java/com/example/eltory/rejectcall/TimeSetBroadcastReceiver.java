@@ -19,6 +19,7 @@ import java.util.Calendar;
 public class TimeSetBroadcastReceiver extends BroadcastReceiver {
 
     private int week;
+    private int requestCode_s;
     private boolean isOn;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -42,16 +43,19 @@ public class TimeSetBroadcastReceiver extends BroadcastReceiver {
             return;
 
         if (isOn) {
+            requestCode_s = intent.getIntExtra("time", 0);
+            Log.d("리퀘스트코드",String.valueOf(requestCode_s));
+            String startEndTime = TimeObjectManager.getInstance().getStartEndTime(requestCode_s);
+            String[] timeSet = startEndTime.split("/");
             editor.putBoolean("autoReject", true).commit();
             notification = new Notification.Builder(context)
                     .setAutoCancel(false)
-                    .setContentTitle("시작시간  00:00 ~ 종료시간  00:00") // TODO: 각 알람마다 시작,종료시간 가져오기
+                    .setContentTitle("시작시간  " + timeSet[0] + " ~ 종료시간  " + timeSet[1]) // TODO: 각 알람마다 시작,종료시간 가져오기
                     .setContentText("자동수신 거부 중입니다.")
                     .setSmallIcon(getNotificationIcon())
                     .build();
             notification.flags = Notification.FLAG_NO_CLEAR;
             nm.notify(111, notification);
-
         } else {
             editor.putBoolean("autoReject", false).commit();
             nm.cancel(111);

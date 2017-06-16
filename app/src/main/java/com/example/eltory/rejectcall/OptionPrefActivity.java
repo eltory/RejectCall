@@ -14,6 +14,7 @@ public class OptionPrefActivity extends PreferenceFragment {
 
     private Intent it;
     SwitchPreference autoReject;
+    SwitchPreference setDetail;
     SwitchPreference block;
 
     @Override
@@ -32,8 +33,19 @@ public class OptionPrefActivity extends PreferenceFragment {
                 return true;
             }
         });
+        setDetail = (SwitchPreference) findPreference("setting");
+        setDetail.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                it = new Intent(getActivity(), CallingService.class);
+                it.putExtra("setOption", "ok");
+                getActivity().startService(it);
+                return true;
+            }
+        });
 
-        block = (SwitchPreference)findPreference("autoBlock");
+
+        block = (SwitchPreference) findPreference("autoBlock");
         block.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
@@ -53,7 +65,7 @@ public class OptionPrefActivity extends PreferenceFragment {
         autoBlock.setNum(0);
     }
 
-    public void setCheck(){
+    public void setCheck() {
         autoReject.setChecked(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("autoReject", false));
     }
 
