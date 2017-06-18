@@ -11,23 +11,63 @@
         android:layout_above="@+id/main_textview"
         sl:scale_base_width="400"
         sl:scale_base_height="200">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            sl:scale_left="20"
-            sl:scale_top="40"
-            sl:scale_width="100"
-            sl:scale_height="30"
-            sl:scale_textsize="20"
-            android:text="hello_world"
-            android:textColor="@android:color/white"
-            android:background="@android:color/black" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            sl:scale_left="200"
-            sl:scale_top="30"
-            sl:scale_width="50"
-            sl:scale_height="50" />
+        <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+            <PreferenceCategory android:title="자동수신거부 설정">
+
+                <SwitchPreference
+                    android:id="@+id/pref_reject"
+                    android:defaultValue="false"
+                    android:key="autoReject"
+                    android:theme="@style/PreferencesTheme"
+                    android:summary="전화수신을 자동으로 거부합니다."
+                    android:title="자동응답거부 설정하기" />
+            </PreferenceCategory>
+            <PreferenceCategory android:title="세부사항 설정">
+                <SwitchPreference
+                    android:id="@+id/pref_set"
+                    android:defaultValue="false"
+                    android:key="setting"
+                    android:theme="@style/PreferencesTheme"
+                    android:summary="응답거부에 관한 세부설정을 합니다."
+                    android:title="세부설정 적용하기" />
+
+                <com.example.eltory.rejectcall.MySwitchPreference
+                    android:id="@+id/pref_message"
+                    android:clickable="false"
+                    android:defaultValue="false"
+                    android:dependency="setting"
+                    android:key="autoMessage"
+                    android:summary="수신거부에 관한 문자메세지를 보냅니다."
+                    android:title="메세지 거부"/>
+
+                <com.example.eltory.rejectcall.MySwitchPreference
+                    android:id="@+id/pref_time"
+                    android:defaultValue="false"
+                    android:clickable="false"
+                    android:dependency="setting"
+                    android:key="autoTime"
+                    android:summary="원하는 요일 및 시간대에만 수신거부를 설정합니다."
+                    android:title="요일 및 시간대 설정하기" />
+
+                <com.example.eltory.rejectcall.MySwitchPreference
+                    android:id="@+id/pref_except"
+                    android:defaultValue="false"
+                    android:clickable="false"
+                    android:dependency="setting"
+                    android:key="exceptNumber"
+                    android:summary="자동읍답 거부모드에도 수신할 번호를 설정합니다."
+                    android:title="예외번호 설정하기" />
+            </PreferenceCategory>
+
+            <PreferenceCategory android:title="수신차단 설정">
+                <com.example.eltory.rejectcall.MySwitchPreference
+                    android:id="@+id/pref_block"
+                    android:background="@android:color/transparent"
+                    android:defaultValue="false"
+                    android:key="autoBlock"
+                    android:summary="모르는 번호를 차단합니다."
+                    android:title="모르는 번호 수신 차단"/>
+            </PreferenceCategory>
+        </PreferenceScreen>
     </com.ssomai.android.scalablelayout.ScalableLayout>
 </LinearLayout>

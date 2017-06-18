@@ -5,16 +5,16 @@ package com.example.eltory.rejectcall;
  */
 public class Unanswered {
 
-    private String calledTime;
+    private long calledTime;
     private String name ;
     private String phoneNum;
     private int numOfCalled = 0;
 
-    public String getCalledTime() {
+    public long getCalledTime() {
         return calledTime;
     }
 
-    public void setCalledTime(String calledTime) {
+    public void setCalledTime(long calledTime) {
         this.calledTime = calledTime;
     }
 

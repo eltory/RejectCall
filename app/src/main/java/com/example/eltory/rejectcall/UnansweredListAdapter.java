@@ -1,13 +1,18 @@
 package com.example.eltory.rejectcall;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 
@@ -16,16 +21,11 @@ import butterknife.BindView;
  */
 public class UnansweredListAdapter extends BaseAdapter {
 
-    private ArrayList<Unanswered> unansweredList = new ArrayList<>();
-
-    // 화면에 표시될 View(Layout 이 inflate 된)으로부터 위젯에 대한 참조 획득
-    @BindView(R.id.name)
-    TextView name;
-    @BindView(R.id.phoneNum)
-    TextView phoneNum;
-    @BindView(R.id.calledNum)
-    TextView calledNum;
-
+    private ArrayList<Unanswered> unansweredList;
+    protected Context context;
+    SimpleDateFormat simpleFormat = new SimpleDateFormat("HH:mm");
+    TextView nameOrNum;
+    TextView calledTime;
 
     // ListViewAdapter 생성자
     public UnansweredListAdapter() {
@@ -35,7 +35,9 @@ public class UnansweredListAdapter extends BaseAdapter {
     // Adapter 에 사용되는 데이터의 개수를 리턴 : 필수 구현
     @Override
     public int getCount() {
-        return unansweredList.size();
+        if (unansweredList != null)
+            return unansweredList.size();
+        return 0;
     }
 
     // position 에 위치한 데이터를 화면에 출력하는데 사용될 View 를 리턴 : 필수 구현
@@ -43,7 +45,7 @@ public class UnansweredListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         final int pos = position;
-        final Context context = parent.getContext();
+        context = parent.getContext();
 
         // "select_option" layout inflate 해서 convertView 참조 획득
         if (convertView == null) {
@@ -51,18 +53,27 @@ public class UnansweredListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.popup_list, parent, false);
         }
 
-        name = (TextView) convertView.findViewById(R.id.name);
-        phoneNum = (TextView) convertView.findViewById(R.id.phoneNum);
-        calledNum = (TextView) convertView.findViewById(R.id.calledNum);
+        nameOrNum = (TextView) convertView.findViewById(R.id.name);
+        calledTime = (TextView) convertView.findViewById(R.id.calledTime);
+        Button btn = (Button) convertView.findViewById(R.id.go_to_call);
 
         // Data Set(OptionSettingItem)에서 position 에 위치한 데이터 참조 획득
         final Unanswered unanswered = unansweredList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         if (unanswered != null) {
-            name.setText(unanswered.getName());
-            phoneNum.setText(unanswered.getPhoneNum());
-            calledNum.setText(unanswered.getCalledTime());
+            if (unanswered.getName() != null)
+                nameOrNum.setText(unanswered.getName() + "(" + unanswered.getNumOfCalled() + ")");
+            else
+                nameOrNum.setText(unanswered.getPhoneNum() + "(" + unanswered.getNumOfCalled() + ")");
+            calledTime.setText(simpleFormat.format(new Date(unanswered.getCalledTime())));
+
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context.startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + unanswered.getPhoneNum())));
+                }
+            });
         }
         return convertView;
     }
@@ -81,7 +92,9 @@ public class UnansweredListAdapter extends BaseAdapter {
 
     // 아이템 데이터 추가를 위한 함수, 개발자가 원하는대로 작성 가능
     public void addItem() {
-
-
+        this.unansweredList = ContactsManager.getInstance().getMissedList(context);
+    }
+    public void init(){
+        this.unansweredList = null;
     }
 }

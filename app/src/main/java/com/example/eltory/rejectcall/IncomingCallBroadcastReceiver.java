@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 
+import java.util.ArrayList;
+
 /**
  * Created by eltory on 2017-03-07.
  * <p/>
@@ -28,11 +30,14 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
         if (state.equals(mState)) {
             return;
         } else {
+            // 전화거부시 부재중목록
+            if (mState != null && mState.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
+
+            }
             mState = state;
         }
         incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
         // TODO : ARC 상태진입 시간 이후부터 설정하기
-        ContactsManager.getInstance().getMissedList(context);
 
         // 현재 상태가 전화걸려오는 상태일때
         if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {

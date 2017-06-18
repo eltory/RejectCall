@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- ####  문자권한  #### -->
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -88,7 +89,7 @@
         <receiver android:name=".UnansweredCallBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
-
+                <action android:name="android.intent.action.SCREEN_OFF" />
                 <!-- <action android:name="android.intent.action.BOOT_COMPLETED"/> -->
             </intent-filter>
         </receiver>
