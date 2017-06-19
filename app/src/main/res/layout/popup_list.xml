@@ -5,7 +5,7 @@
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal"
     android:paddingBottom="10dp"
-    android:paddingTop="10dp"
+    android:padding="10dp"
 
     >
 
@@ -37,20 +37,19 @@
             android:textSize="10dp" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@android:color/black">
+        android:gravity="center_vertical|right">
 
         <Button
             android:id="@+id/go_to_call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@android:drawable/ic_menu_call"
-            android:gravity="center_vertical"
-            android:textColor="#000000" />
-    </LinearLayout>
+            android:layout_gravity="center_vertical"
+            android:background="@android:drawable/sym_action_call"
+            android:gravity="center" />
+    </RelativeLayout>
 
 </LinearLayout>

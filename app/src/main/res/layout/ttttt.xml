@@ -1,73 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sl="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.ssomai.android.scalablelayout.ScalableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:layout_above="@+id/main_textview"
-        sl:scale_base_width="400"
-        sl:scale_base_height="200">
-        <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-            <PreferenceCategory android:title="자동수신거부 설정">
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_width="400dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
 
-                <SwitchPreference
-                    android:id="@+id/pref_reject"
-                    android:defaultValue="false"
-                    android:key="autoReject"
-                    android:theme="@style/PreferencesTheme"
-                    android:summary="전화수신을 자동으로 거부합니다."
-                    android:title="자동응답거부 설정하기" />
-            </PreferenceCategory>
-            <PreferenceCategory android:title="세부사항 설정">
-                <SwitchPreference
-                    android:id="@+id/pref_set"
-                    android:defaultValue="false"
-                    android:key="setting"
-                    android:theme="@style/PreferencesTheme"
-                    android:summary="응답거부에 관한 세부설정을 합니다."
-                    android:title="세부설정 적용하기" />
 
-                <com.example.eltory.rejectcall.MySwitchPreference
-                    android:id="@+id/pref_message"
-                    android:clickable="false"
-                    android:defaultValue="false"
-                    android:dependency="setting"
-                    android:key="autoMessage"
-                    android:summary="수신거부에 관한 문자메세지를 보냅니다."
-                    android:title="메세지 거부"/>
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="400dp"
+        android:layout_gravity="center"
+        android:background="#005663"
+        android:orientation="vertical">
 
-                <com.example.eltory.rejectcall.MySwitchPreference
-                    android:id="@+id/pref_time"
-                    android:defaultValue="false"
-                    android:clickable="false"
-                    android:dependency="setting"
-                    android:key="autoTime"
-                    android:summary="원하는 요일 및 시간대에만 수신거부를 설정합니다."
-                    android:title="요일 및 시간대 설정하기" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="right">
 
-                <com.example.eltory.rejectcall.MySwitchPreference
-                    android:id="@+id/pref_except"
-                    android:defaultValue="false"
-                    android:clickable="false"
-                    android:dependency="setting"
-                    android:key="exceptNumber"
-                    android:summary="자동읍답 거부모드에도 수신할 번호를 설정합니다."
-                    android:title="예외번호 설정하기" />
-            </PreferenceCategory>
+            <Button
+                android:id="@+id/close_popup"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@android:drawable/presence_offline" />
+        </LinearLayout>
 
-            <PreferenceCategory android:title="수신차단 설정">
-                <com.example.eltory.rejectcall.MySwitchPreference
-                    android:id="@+id/pref_block"
-                    android:background="@android:color/transparent"
-                    android:defaultValue="false"
-                    android:key="autoBlock"
-                    android:summary="모르는 번호를 차단합니다."
-                    android:title="모르는 번호 수신 차단"/>
-            </PreferenceCategory>
-        </PreferenceScreen>
-    </com.ssomai.android.scalablelayout.ScalableLayout>
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-6474387689840332/2846812403" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <ListView
+                    android:id="@+id/tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"
+                    android:gravity="center" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </LinearLayout>

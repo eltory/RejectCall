@@ -44,10 +44,12 @@ public class TimeObjectManager {
         setTimeObjs();
     }
 
+
     public String getStartEndTime(int requestCode) {
         return simpleFormat.format(new Date(findTimeObj(requestCode).getStartTime())) + "/" + simpleFormat.format(new Date(findTimeObj(requestCode).getEndTime()));
     }
 
+    /*  Distinguish from the list by request code  */
     public TimeObj findTimeObj(int requestCode) {
         return this.timeObjs.getTimeObj(requestCode);
     }

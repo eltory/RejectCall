@@ -79,7 +79,6 @@ public class ContactsManager {
         if (unansweredLists.getList() == null) {
             unansweredLists.setList(new ArrayList<Unanswered>());
         }
-        // TODO : missed call list 가져오기
         try {
             cursor = context.getContentResolver().query(
                     CallLog.Calls.CONTENT_URI,
@@ -116,10 +115,9 @@ public class ContactsManager {
                             missedCall.setName(name);
                             missedCall.setPhoneNum(number);
                             missedCall.setCalledTime(date);
-                            missedCall.setNumOfCalled(missedCall.getNumOfCalled() + 1);
+                            missedCall.setNumOfCalled(1);
                             unansweredLists.getList().add(missedCall);
                         } else {
-                            unansweredLists.getUnanswered(number).setCalledTime(date);
                             unansweredLists.getUnanswered(number).setNumOfCalled(unansweredLists.getUnanswered(number).getNumOfCalled() + 1);
                             Log.d("진입----", "오브시간" + String.valueOf(date));
                         }
@@ -129,6 +127,10 @@ public class ContactsManager {
             }
         } catch (SecurityException e) {
             e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
     }
 
@@ -143,10 +145,15 @@ public class ContactsManager {
 
     public void initLists() {
         this.unansweredLists.setList(null);
+        Log.d("인잇", "진입");
     }
 
     public void setCurrTime() {
         this.currTime = System.currentTimeMillis();
+    }
+
+    public boolean isZeroCurrTime() {
+        return currTime == 0;
     }
 
     public boolean hasUnansweredList() {

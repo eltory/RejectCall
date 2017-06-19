@@ -1,49 +1,63 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sl="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_width="400dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical">
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#a77000"
-        android:orientation="horizontal"
-        android:paddingRight="5dp">
+        android:layout_width="320dp"
+        android:layout_height="400dp"
+        android:layout_gravity="center"
+        android:background="#005663"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="9"
-            android:orientation="horizontal" />
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="right">
 
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
+            <Button
+                android:id="@+id/close_popup"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@android:drawable/presence_offline" />
+        </LinearLayout>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@android:drawable/presence_offline"
-            android:gravity="center" />
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-6474387689840332/2846812403" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <ListView
+                    android:id="@+id/tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"
+                    android:gravity="center" />
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@android:color/white"
-        android:gravity="center"
-        android:text="타이틀" />
-
-    <ListView
-        android:id="@+id/tv_content"
-        android:background="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:gravity="center" />
-
 
 </LinearLayout>

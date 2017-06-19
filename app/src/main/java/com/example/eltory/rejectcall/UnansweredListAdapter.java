@@ -63,9 +63,9 @@ public class UnansweredListAdapter extends BaseAdapter {
         // 아이템 내 각 위젯에 데이터 반영
         if (unanswered != null) {
             if (unanswered.getName() != null)
-                nameOrNum.setText(unanswered.getName() + "(" + unanswered.getNumOfCalled() + ")");
+                nameOrNum.setText(unanswered.getName() + " (" + unanswered.getNumOfCalled() + ")");
             else
-                nameOrNum.setText(unanswered.getPhoneNum() + "(" + unanswered.getNumOfCalled() + ")");
+                nameOrNum.setText(unanswered.getPhoneNum() + " (" + unanswered.getNumOfCalled() + ")");
             calledTime.setText(simpleFormat.format(new Date(unanswered.getCalledTime())));
 
             btn.setOnClickListener(new View.OnClickListener() {

@@ -13,7 +13,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.ArraySet;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.eltory.rejectcall.ContactsManager;
@@ -33,20 +36,30 @@ public class SetExceptNumber extends AppCompatActivity {
     private ArrayList numberList;
     private ArrayList person;
     private final Context context = this;
+    String phnum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_exception_num);
-
-        ListView lv = (ListView) findViewById(R.id.contact_list);
         numberList = ContactsManager.getInstance().getContactsList(this);
+        ListView lv = (ListView) findViewById(R.id.contact_list);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, numberList);
+        lv.setAdapter(adapter);
+        Button btn = (Button)findViewById(R.id.bbb);
+        final EditText ed = (EditText)findViewById(R.id.num);
+
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                phnum = ed.getText().toString();
+            }
+        });
     }
 
     public boolean isSavedContacts(String num) {
-        if (numberList.contains(num))
-            return true;
-        return false;
+        return (numberList.contains(num));
     }
 
     public void putExc() {

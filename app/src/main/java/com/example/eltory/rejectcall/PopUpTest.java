@@ -18,6 +18,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import butterknife.BindView;
 
 /**
@@ -43,11 +46,17 @@ public class PopUpTest extends Activity {
         setContentView(R.layout.popup_unanswered_list);
         final View view2 = this.getWindow().getDecorView();
 
+         /*  AdMob ad banner  */
+        AdView mAdView = (AdView) findViewById(R.id.adView_);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.setVisibility(View.VISIBLE);
+        mAdView.loadAd(adRequest);
+
         ListView tv = (ListView) findViewById(R.id.tv_content);
         adapter = new UnansweredListAdapter();
         adapter.addItem();
         tv.setAdapter(adapter);
-        Button cancel = (Button) findViewById(R.id.btn_cancel);
+        Button cancel = (Button) findViewById(R.id.close_popup);
         final WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +74,6 @@ public class PopUpTest extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("리쥼","ㅇ");
         adapter.addItem();
         adapter.notifyDataSetChanged();
     }
@@ -73,16 +81,18 @@ public class PopUpTest extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("정지", "ㅇ");
-        Log.d("현재시간", String.valueOf(System.currentTimeMillis()));
-        ContactsManager.getInstance().initLists();
+        onDestroy();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("파괴", "ㅇ");
-        Log.d("현재시간", String.valueOf(System.currentTimeMillis()));
+        finish();
         ContactsManager.getInstance().initLists();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

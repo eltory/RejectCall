@@ -63,7 +63,7 @@ public class SetTimeObject extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 cal = Calendar.getInstance();
-                // TODO:request 코드 받아오기
+
                 requestCode = new int[]{(int) System.currentTimeMillis(), (int) System.currentTimeMillis() + 1};
                 Log.d("시작", String.valueOf(requestCode[0]));
                 Log.d("종료", String.valueOf(requestCode[1]));
