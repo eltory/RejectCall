@@ -1,7 +1,9 @@
 package com.example.eltory.rejectcall;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -26,6 +28,8 @@ public class ContactsManager {
 
     private ContactsManager() {
         unansweredLists = new ListUnanswered();
+        if(currTime == 0)
+            currTime = System.currentTimeMillis();
     }
 
     /*  Singleton Instance  */
@@ -109,8 +113,7 @@ public class ContactsManager {
                     Log.d("진입----", "현재시간 :" + String.valueOf(currTime));
                     Log.d("진입----", "커서시간 :" + String.valueOf(date));
 
-                    //if (currTime < date && currTime != 0) {
-                    {
+                    if (currTime < date) {
                         if (unansweredLists.getUnanswered(number) == null) {
                             Log.d("첨", "진입");
                             missedCall = new Unanswered();
@@ -150,8 +153,9 @@ public class ContactsManager {
         Log.d("인잇", "진입");
     }
 
-    public void setCurrTime() {
-        this.currTime = System.currentTimeMillis();
+    public void setCurrTime(Context context) {
+        SharedPreferences pref_time = context.getSharedPreferences("time", Context.MODE_PRIVATE);
+        this.currTime = pref_time.getLong("currTime", System.currentTimeMillis());
     }
 
     public boolean isZeroCurrTime() {

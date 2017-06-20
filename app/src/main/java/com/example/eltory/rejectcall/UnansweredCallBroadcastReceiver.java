@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -22,10 +23,15 @@ public class UnansweredCallBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_USER_PRESENT)) {
             Log.d("화면켜짐", "실행");
+            SharedPreferences pref_time = context.getSharedPreferences("time", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref_time.edit();
+            editor.putLong("currTime", System.currentTimeMillis()).commit();
+
+
 // TODO: 팝업 리스트 서비스스레드 재실행시 시간값에 따라 개수 받아오는거 수정하기
             // if (ContactsManager.getInstance().isZeroCurrTime())
             //  ContactsManager.getInstance().setCurrTime();
-            //ContactsManager.getInstance().setMissedCall(context);
+            ContactsManager.getInstance().setMissedCall(context);
             if (ContactsManager.getInstance().hasUnansweredList()) {
                 Log.d("팝업진입", "실행");
                 Intent i = new Intent(context, PopUpTest.class);
@@ -35,8 +41,9 @@ public class UnansweredCallBroadcastReceiver extends BroadcastReceiver {
         }
         if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
             Log.d("화면꺼짐", "실행");
+            ContactsManager.getInstance().setCurrTime(context);
+            ContactsManager.getInstance().initLists();
         }
-        ContactsManager.getInstance().initLists();
     }
 }
 

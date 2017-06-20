@@ -32,7 +32,7 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
         } else {
             // 전화거부시 부재중목록
             if (mState != null && mState.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
-                ContactsManager.getInstance().setMissedCall(context);
+                //ContactsManager.getInstance().setMissedCall(context);
             }
             mState = state;
         }

@@ -37,6 +37,7 @@ public class CallingService extends Service {
     private SharedPreferences pref_msg;
     private SharedPreferences pref_except;
     private boolean[] checkedOptions = new boolean[6];
+    private long time;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -47,7 +48,7 @@ public class CallingService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d("실행...", "Calling 서비스 실행중");
-        ContactsManager.getInstance().setCurrTime();
+
         UnansweredCallBroadcastReceiver un = new UnansweredCallBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.intent.action.SCREEN_OFF");
