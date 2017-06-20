@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  * Created by eltory on 2017-03-07.
- * <p/>
+ * <p>
  * Description : Being operated on background, BroadcastReceiver is for incoming of any call
  * When the call comes into the phone, the BR is awaken for delivering data which have
  * incoming phone number and current state to a CallingService.
@@ -32,7 +32,7 @@ public class IncomingCallBroadcastReceiver extends BroadcastReceiver {
         } else {
             // 전화거부시 부재중목록
             if (mState != null && mState.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
-
+                ContactsManager.getInstance().setMissedCall(context);
             }
             mState = state;
         }

@@ -62,9 +62,6 @@ public class PopUpTest extends Activity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setType(CallLog.Calls.CONTENT_TYPE);
-                startActivity(intent);
                 ContactsManager.getInstance().initLists();
                 finish();
             }

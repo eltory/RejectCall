@@ -108,7 +108,9 @@ public class ContactsManager {
                     Log.d("진입----", "cursor :" + number);
                     Log.d("진입----", "현재시간 :" + String.valueOf(currTime));
                     Log.d("진입----", "커서시간 :" + String.valueOf(date));
-                    if (currTime < date) {
+
+                    //if (currTime < date && currTime != 0) {
+                    {
                         if (unansweredLists.getUnanswered(number) == null) {
                             Log.d("첨", "진입");
                             missedCall = new Unanswered();
@@ -139,7 +141,7 @@ public class ContactsManager {
     }
 
     public ArrayList<Unanswered> getMissedList(Context context) {
-        //missedList(context);
+
         return unansweredLists.getList();
     }
 
@@ -157,6 +159,7 @@ public class ContactsManager {
     }
 
     public boolean hasUnansweredList() {
-        return unansweredLists.getList().size() > 0;
+        return unansweredLists.getList() != null;
+
     }
 }

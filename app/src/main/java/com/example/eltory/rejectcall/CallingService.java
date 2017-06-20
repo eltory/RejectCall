@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
@@ -115,7 +116,8 @@ public class CallingService extends Service {
                         return;
                 }*/
                 pref_msg = getSharedPreferences("Message", MODE_PRIVATE);
-                sendSMS(incomingNumber, pref_msg.getString("MSG", null));
+                sendSMS(incomingNumber, pref_msg.getString("MSG", SetMessage.SEND_MSG));
+
             }
         } catch (Exception e) {
             e.printStackTrace();

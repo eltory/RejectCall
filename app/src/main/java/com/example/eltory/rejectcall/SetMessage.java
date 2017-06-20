@@ -3,6 +3,8 @@ package com.example.eltory.rejectcall;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +38,7 @@ import butterknife.ButterKnife;
 
 public class SetMessage extends AppCompatActivity {
 
-    private static final String SEND_MSG = "지금은 전화를 받을 수 없습니다.";
+    public static final String SEND_MSG = "지금은 전화를 받을 수 없습니다.";
     private String msgString;
     private int checkedPosition;
     private int except;
