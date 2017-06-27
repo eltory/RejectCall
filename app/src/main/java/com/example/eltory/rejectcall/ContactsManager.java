@@ -21,15 +21,13 @@ public class ContactsManager {
 
     private static ContactsManager contactsManager = null;
     private ListUnanswered unansweredLists;
-    private ArrayList person = null;
+    private ArrayList<ContactItem> person = null;
     private Unanswered missedCall;
     private Cursor cursor;
     private long currTime;
 
     private ContactsManager() {
         unansweredLists = new ListUnanswered();
-        if(currTime == 0)
-            currTime = System.currentTimeMillis();
     }
 
     /*  Singleton Instance  */
@@ -59,7 +57,11 @@ public class ContactsManager {
 
             cursor.moveToFirst();  // Cursor 에 담긴 연락처 정보들 person <List> 에 담기
             do {
-                person.add(cursor.getString(1));
+                ContactItem contactItem = new ContactItem();
+                contactItem.setName(cursor.getString(0));
+                contactItem.setPhoneNumber(cursor.getString(1));
+                contactItem.setCheck(false);
+                person.add(contactItem);
             } while (cursor.moveToNext());
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,18 +102,10 @@ public class ContactsManager {
 
             cursor.moveToFirst();
             if (cursor != null && cursor.getCount() > 0) {
-
-                Log.d("진입----", "cursor.getCount() :" + cursor.getCount());
-
                 do {
                     String name = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
                     String number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
                     long date = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE));
-
-                    Log.d("진입----", "cursor :" + name);
-                    Log.d("진입----", "cursor :" + number);
-                    Log.d("진입----", "현재시간 :" + String.valueOf(currTime));
-                    Log.d("진입----", "커서시간 :" + String.valueOf(date));
 
                     if (currTime < date) {
                         if (unansweredLists.getUnanswered(number) == null) {
@@ -124,7 +118,6 @@ public class ContactsManager {
                             unansweredLists.getList().add(missedCall);
                         } else {
                             unansweredLists.getUnanswered(number).setNumOfCalled(unansweredLists.getUnanswered(number).getNumOfCalled() + 1);
-                            Log.d("진입----", "오브시간" + String.valueOf(date));
                         }
                     }
                 }
@@ -138,19 +131,21 @@ public class ContactsManager {
             }
         }
     }
+    public ContactItem getAnItem(String phoneNumber){
+return person.get
+
+    }
 
     public void setMissedCall(Context context) {
         missedList(context);
     }
 
     public ArrayList<Unanswered> getMissedList(Context context) {
-
         return unansweredLists.getList();
     }
 
     public void initLists() {
         this.unansweredLists.setList(null);
-        Log.d("인잇", "진입");
     }
 
     public void setCurrTime(Context context) {
@@ -158,12 +153,9 @@ public class ContactsManager {
         this.currTime = pref_time.getLong("currTime", System.currentTimeMillis());
     }
 
-    public boolean isZeroCurrTime() {
-        return currTime == 0;
-    }
-
     public boolean hasUnansweredList() {
-        return unansweredLists.getList() != null;
-
+        if (unansweredLists.getList() != null)
+            return unansweredLists.getList().size() > 0;
+        return false;
     }
 }

@@ -1,7 +1,9 @@
 package com.example.eltory.rejectcall;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -36,26 +38,48 @@ public class SetExceptNumber extends AppCompatActivity {
     private ArrayList numberList;
     private ArrayList person;
     private final Context context = this;
+    private ListView lv;
     String phnum;
-
+    ContactAdapter adapter;
+    ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_exception_num);
-        numberList = ContactsManager.getInstance().getContactsList(this);
-        ListView lv = (ListView) findViewById(R.id.contact_list);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, numberList);
-        lv.setAdapter(adapter);
-        Button btn = (Button)findViewById(R.id.bbb);
-        final EditText ed = (EditText)findViewById(R.id.num);
+        listView = (ListView) findViewById(R.id.excepted_list);
+        adapter = new ContactAdapter();
+        final EditText ed = (EditText) findViewById(R.id.addPNum);
+        Button btn2 = (Button) findViewById(R.id.find);
+        Button btn = (Button) findViewById(R.id.addNum);
 
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(SetExceptNumber.this, ContactsListForExcept.class), 1);
+            }
+        });
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 phnum = ed.getText().toString();
+                if(isSavedContacts(phnum))
+                    adapter.addAnItem();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                adapter.addItem((ArrayList<ContactItem>) data.getSerializableExtra("list"));
+                if (adapter != null)
+                    listView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
     public boolean isSavedContacts(String num) {

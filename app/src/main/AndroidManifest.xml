@@ -45,6 +45,7 @@
         <activity android:name=".SetTimeObject" />
         <activity android:name=".SettingTest" />
         <activity android:name=".TestTest"/>
+        <activity android:name=".ContactsListForExcept" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/MyAppTheme">

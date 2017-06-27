@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="15dp">
 
     <TextView
         android:id="@+id/textView3"
@@ -10,18 +11,51 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="익셉션" />
-<EditText
-    android:id="@+id/num"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="phone" />
-    <Button
-        android:id="@+id/bbb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <ListView
-        android:id="@+id/contact_list"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_border"
+            android:paddingLeft="5dp">
+
+            <EditText
+                android:id="@+id/addPNum"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="예외로 설정할 번호를 입력하세요."
+                android:singleLine="true"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:textCursorDrawable="@color/colorPrimary"
+                android:inputType="phone" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="추가하기" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/find"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|right"
+        android:text="연락처에서 찾기" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/excepted_list"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>
