@@ -131,9 +131,10 @@ public class ContactsManager {
             }
         }
     }
-    public ContactItem getAnItem(String phoneNumber){
-return person.get
 
+    public ContactItem getAnItem(String phoneNumber) {
+        // 리턴 제대로 바꾸기
+        return person.get(1);
     }
 
     public void setMissedCall(Context context) {
@@ -151,6 +152,10 @@ return person.get
     public void setCurrTime(Context context) {
         SharedPreferences pref_time = context.getSharedPreferences("time", Context.MODE_PRIVATE);
         this.currTime = pref_time.getLong("currTime", System.currentTimeMillis());
+    }
+
+    public boolean isSavedContacts(String num) {
+        return this.person.contains(num);
     }
 
     public boolean hasUnansweredList() {

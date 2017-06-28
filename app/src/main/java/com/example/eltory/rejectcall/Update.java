@@ -437,5 +437,4 @@ public class Update extends Activity {
         viewUpdateHandler.sendMessage(msg);
         return filedownloaded;
     }
-
 }*/

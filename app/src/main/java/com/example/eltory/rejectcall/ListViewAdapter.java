@@ -49,10 +49,9 @@ public class ListViewAdapter extends BaseAdapter {
         final int pos = position;
         final Context context = parent.getContext();
 
-        // "select_option" layout inflate 해서 convertView 참조 획득
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.select_option, parent, false);
+            convertView = inflater.inflate(R.layout.select_time_set, parent, false);
         }
 
         desc = (TextView) convertView.findViewById(R.id.descStr);

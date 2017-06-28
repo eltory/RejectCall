@@ -36,8 +36,7 @@ public class CallingService extends Service {
     private SharedPreferences pref_option;
     private SharedPreferences pref_msg;
     private SharedPreferences pref_except;
-    private boolean[] checkedOptions = new boolean[6];
-    private long time;
+    private boolean[] checkedOptions = new boolean[7];
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -92,12 +91,14 @@ public class CallingService extends Service {
     /*  Get the options of Setting  */
     public void setOptions() {
         pref_option = PreferenceManager.getDefaultSharedPreferences(this);
+        pref_msg = getSharedPreferences("Message", MODE_PRIVATE);
         this.checkedOptions[0] = pref_option.getBoolean("autoReject", false);
         this.checkedOptions[1] = pref_option.getBoolean("setting", false);
         this.checkedOptions[2] = pref_option.getBoolean("autoMessage", false);
         this.checkedOptions[3] = pref_option.getBoolean("autoTime", false);
         this.checkedOptions[4] = pref_option.getBoolean("exceptNum", false);
         this.checkedOptions[5] = pref_option.getBoolean("autoBlock", false);
+        this.checkedOptions[6] = pref_msg.getBoolean("exceptUnregist", false);
     }
 
     /*  Auto Call Rejection (The following, I'll call ACR or ACB)  */
@@ -109,16 +110,17 @@ public class CallingService extends Service {
             telephonyService = (ITelephony) m.invoke(tm);
             telephonyService.endCall();
 
-            // 메세지 자동 발송조건문 -> 자동문자 발송 설정여부
+            // 메세지 자동 발송조건문 -> 세부설정 & 자동문자 발송 설정여부
             if (this.checkedOptions[1] && this.checkedOptions[2]) {
-                // TODO : 상황에 맞는 메세지 가져오기, 모르는번호 메세지 처리하기
-                /*if (pref_msg.getInt("except", 0) == 1) {
-                    if (ContactsManager.getInstance().getContactsList(this).contains(incomingNumber))
+                // 모르는 번호 문자보내기 금지
+                if (this.checkedOptions[6]) {
+                    Log.d("모르는번호","진입");
+                    if (ContactsManager.getInstance().isSavedContacts(incomingNumber))
                         return;
-                }*/
-                pref_msg = getSharedPreferences("Message", MODE_PRIVATE);
+                    Log.d("아는번호임","ㅇ");
+                }
+                // TODO : 상황에 맞는 메세지 가져오기, 모르는번호 메세지 처리하기
                 sendSMS(incomingNumber, pref_msg.getString("MSG", SetMessage.SEND_MSG));
-
             }
         } catch (Exception e) {
             e.printStackTrace();

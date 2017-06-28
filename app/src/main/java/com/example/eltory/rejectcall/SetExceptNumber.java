@@ -63,8 +63,8 @@ public class SetExceptNumber extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 phnum = ed.getText().toString();
-                if(isSavedContacts(phnum))
-                    adapter.addAnItem();
+               // if(isSavedContacts(phnum))
+                   // adapter.addAnItem();
             }
         });
     }
@@ -80,10 +80,6 @@ public class SetExceptNumber extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         }
-    }
-
-    public boolean isSavedContacts(String num) {
-        return (numberList.contains(num));
     }
 
     public void putExc() {

@@ -47,7 +47,6 @@ public class UnansweredListAdapter extends BaseAdapter {
         final int pos = position;
         context = parent.getContext();
 
-        // "select_option" layout inflate 해서 convertView 참조 획득
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.popup_list, parent, false);

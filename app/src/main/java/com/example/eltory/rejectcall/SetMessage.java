@@ -2,6 +2,7 @@ package com.example.eltory.rejectcall;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -41,7 +42,6 @@ public class SetMessage extends AppCompatActivity {
     public static final String SEND_MSG = "지금은 전화를 받을 수 없습니다.";
     private String msgString;
     private int checkedPosition;
-    private int except;
     private SharedPreferences pref_msg;
     private SharedPreferences.Editor editor;
     private Set<String> msgSet;
@@ -70,8 +70,8 @@ public class SetMessage extends AppCompatActivity {
         pref_msg = getSharedPreferences("Message", MODE_PRIVATE);
         editor = pref_msg.edit();
         checkedPosition = pref_msg.getInt("CheckedPosition", 0);
-        except = pref_msg.getInt("except", 0);
         msgString = pref_msg.getString("msgString", SEND_MSG);
+        msgExcept.setChecked(pref_msg.getBoolean("exceptUnregist", false));
         msgSet = pref_msg.getStringSet("MsgSet", new HashSet<String>());
         inSet = new HashSet<>(msgSet);
         toSort = new ArrayList(msgSet);
@@ -191,10 +191,10 @@ public class SetMessage extends AppCompatActivity {
         msgExcept.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b)
-                    editor.putInt("except", 1).commit();
-                else
-                    editor.putInt("except", 0).commit();
+                editor.putBoolean("exceptUnregist", b).commit();
+                Intent it = new Intent(SetMessage.this, CallingService.class);
+                it.putExtra("setOption", "ok");
+                startService(it);
             }
         });
     }
