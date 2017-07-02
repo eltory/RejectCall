@@ -37,7 +37,7 @@ public class MySwitchPreference extends SwitchPreference {
         ViewGroup vg = (ViewGroup) view;
         RelativeLayout titleView = (RelativeLayout) vg.getChildAt(1);
         TextView title = (TextView) view.findViewById(android.R.id.title);
-        title.setTextSize(18);
+
         //title.setTextColor(getContext().getResources().getColor(R.color.title));
 
         // Ripple 효과주기

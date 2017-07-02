@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center_vertical"
-            android:text="New Text"
             android:textColor="#000000"
             android:textSize="16dp" />
 
@@ -31,21 +30,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="New Text"
             android:textColor="#8d666666"
             android:textSize="10dp" />
     </LinearLayout>
 
-    <LinearLayout
+    <CheckBox
+        android:id="@+id/setSwitch"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center_vertical|right">
-
-        <CheckBox
-            android:id="@+id/setSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:contextClickable="false" />
 
 </LinearLayout>

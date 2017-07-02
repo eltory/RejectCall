@@ -16,12 +16,14 @@ import java.util.Date;
  * Created by eltory on 2017-05-18.
  */
 
-
 public class ContactsManager {
 
     private static ContactsManager contactsManager = null;
     private ListUnanswered unansweredLists;
     private ArrayList<ContactItem> person = null;
+    private ArrayList<ContactItem> list;
+    private ComplexPreferences complexPreferences;
+    private ListContactObj contactObjs;
     private Unanswered missedCall;
     private Cursor cursor;
     private long currTime;
@@ -162,5 +164,22 @@ public class ContactsManager {
         if (unansweredLists.getList() != null)
             return unansweredLists.getList().size() > 0;
         return false;
+    }
+
+    public boolean isExceptedList(Context context, String phoneNumber){
+        return getContactObjs(context).isSavedObj(phoneNumber);
+    }
+
+    /*  Return the person object list  */
+    public ListContactObj getContactObjs(Context context) {
+        this.complexPreferences = ComplexPreferences.getComplexPreferences(context, "mExceptList", Context.MODE_PRIVATE);
+        this.contactObjs = complexPreferences.getObject("exceptedList", ListContactObj.class);
+
+        if (contactObjs == null) {
+            list = new ArrayList<>();
+            this.contactObjs = new ListContactObj();
+            this.contactObjs.setList(list);
+        }
+        return this.contactObjs;
     }
 }

@@ -70,14 +70,14 @@ public class ContactAdapter extends BaseAdapter {
             public void onClick(View view) {
                 if (check.isChecked()) {
                     contactItemList.get(position).setCheck(true);
-                    objList.add(contactItem);
+                    if (!ContactsManager.getInstance().isExceptedList(context, contactItemList.get(position).getPhoneNumber()))
+                        objList.add(contactItem);
                 } else {
                     contactItemList.get(position).setCheck(false);
                     objList.remove(contactItem);
                 }
             }
         });
-
         return view;
     }
 

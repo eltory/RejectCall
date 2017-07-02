@@ -30,28 +30,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="5dp">
-
-        <TextView
-            android:id="@+id/set_no_duplicate_view"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="4"
-            android:text="같은번호 문자 2번 이상 보내지 않기" />
-
-        <Switch
-            android:id="@+id/set_no_duplicate"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_gravity="right"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:weightSum="1">
 
         <LinearLayout

@@ -77,7 +77,7 @@ public class CallingService extends Service {
             incomingNumber = intent.getStringExtra(EXTRA_CALL_NUMBER);
 
             // 수신거절 설정조건문 -> 자동응답거부 설정여부
-            if (this.checkedOptions[0]) {
+            if (this.checkedOptions[0] && ContactsManager.getInstance().isExceptedList(getApplicationContext(), incomingNumber)) {
                 tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 setBlock();
             }
@@ -114,10 +114,8 @@ public class CallingService extends Service {
             if (this.checkedOptions[1] && this.checkedOptions[2]) {
                 // 모르는 번호 문자보내기 금지
                 if (this.checkedOptions[6]) {
-                    Log.d("모르는번호","진입");
                     if (ContactsManager.getInstance().isSavedContacts(incomingNumber))
                         return;
-                    Log.d("아는번호임","ㅇ");
                 }
                 // TODO : 상황에 맞는 메세지 가져오기, 모르는번호 메세지 처리하기
                 sendSMS(incomingNumber, pref_msg.getString("MSG", SetMessage.SEND_MSG));

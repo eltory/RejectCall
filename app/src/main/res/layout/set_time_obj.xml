@@ -125,6 +125,7 @@
                     sl:scale_height="200"
                     sl:scale_textsize="50"
                     sl:scale_width="1280" />
+
             </com.ssomai.android.scalablelayout.ScalableLayout>
         </LinearLayout>
 
