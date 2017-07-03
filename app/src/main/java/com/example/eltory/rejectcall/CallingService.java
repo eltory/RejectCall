@@ -75,9 +75,15 @@ public class CallingService extends Service {
         // 자동수신거부를 위한 외부번호 인텐트
         if (intent.getStringExtra(EXTRA_CALL_NUMBER) != null) {
             incomingNumber = intent.getStringExtra(EXTRA_CALL_NUMBER);
-
+            setOptions();
+           // Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
             // 수신거절 설정조건문 -> 자동응답거부 설정여부
-            if (this.checkedOptions[0] && ContactsManager.getInstance().isExceptedList(getApplicationContext(), incomingNumber)) {
+            if (this.checkedOptions[0]) {
+                if (this.checkedOptions[1] && this.checkedOptions[4]) {
+                    Log.d("익셉","진입");
+                    if (ContactsManager.getInstance().isExceptedList(getApplicationContext(), incomingNumber))
+                        return;
+                }
                 tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 setBlock();
             }
@@ -96,7 +102,7 @@ public class CallingService extends Service {
         this.checkedOptions[1] = pref_option.getBoolean("setting", false);
         this.checkedOptions[2] = pref_option.getBoolean("autoMessage", false);
         this.checkedOptions[3] = pref_option.getBoolean("autoTime", false);
-        this.checkedOptions[4] = pref_option.getBoolean("exceptNum", false);
+        this.checkedOptions[4] = pref_option.getBoolean("exceptNumber", false);
         this.checkedOptions[5] = pref_option.getBoolean("autoBlock", false);
         this.checkedOptions[6] = pref_msg.getBoolean("exceptUnregist", false);
     }
@@ -114,7 +120,7 @@ public class CallingService extends Service {
             if (this.checkedOptions[1] && this.checkedOptions[2]) {
                 // 모르는 번호 문자보내기 금지
                 if (this.checkedOptions[6]) {
-                    if (ContactsManager.getInstance().isSavedContacts(incomingNumber))
+                    if (ContactsManager.getInstance().isSavedContacts(getApplicationContext(), incomingNumber))
                         return;
                 }
                 // TODO : 상황에 맞는 메세지 가져오기, 모르는번호 메세지 처리하기

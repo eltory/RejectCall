@@ -25,7 +25,7 @@ public class ListTimeObj {
         while (iterator.hasNext()) {
             TimeObj timeObj = (TimeObj) iterator.next();
 
-            if (timeObj.getRequestCodeSet()[0] == requestCodeSet)
+            if (timeObj.getRequestCodeSet()[0] == requestCodeSet || timeObj.getRequestCodeSet()[1] == requestCodeSet)
                 return timeObj;
         }
         return null;

@@ -125,6 +125,12 @@
                     sl:scale_height="200"
                     sl:scale_textsize="50"
                     sl:scale_width="1280" />
+                <Switch sl:scale_height="200"
+                    sl:scale_textsize="50"
+                    sl:scale_width="1280"
+                    android:id="@+id/isRepeat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </com.ssomai.android.scalablelayout.ScalableLayout>
         </LinearLayout>

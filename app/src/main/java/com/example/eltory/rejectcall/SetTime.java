@@ -1,5 +1,9 @@
 package com.example.eltory.rejectcall;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 
@@ -38,7 +42,7 @@ public class SetTime extends AppCompatActivity {
         // 알람 삭제 가능
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public boolean onItemLongClick(final AdapterView<?> adapterView, View view, int i, long l) {
                 final int position = i;
 
                 android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(SetTime.this);
@@ -48,6 +52,10 @@ public class SetTime extends AppCompatActivity {
                         .setPositiveButton("예", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                onUnregisterAlarm(((TimeObj) adapter.getItem(position)).getRequestCodeSet()[0]);
+                                onUnregisterAlarm(((TimeObj) adapter.getItem(position)).getRequestCodeSet()[1]);
+                                NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                                nm.cancel(111);
                                 adapter.removeItem(position);
                                 adapter.notifyDataSetChanged();
                             }
@@ -73,6 +81,14 @@ public class SetTime extends AppCompatActivity {
                 startActivity(new Intent(SetTime.this, SetTimeObject.class));
             }
         });
+    }
+
+    /*  Unregister an alarm  */
+    private void onUnregisterAlarm(int requestCode) {
+        Intent intent = new Intent(this, TimeSetBroadcastReceiver.class);
+        PendingIntent pIntent = PendingIntent.getBroadcast(this, requestCode, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pIntent);
     }
 
     // 추가하기

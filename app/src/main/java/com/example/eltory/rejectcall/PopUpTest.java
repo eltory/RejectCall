@@ -37,6 +37,7 @@ public class PopUpTest extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Log.d("팝업","진입");
 
         final WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
 

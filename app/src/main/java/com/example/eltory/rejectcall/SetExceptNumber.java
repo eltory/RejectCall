@@ -102,7 +102,7 @@ public class SetExceptNumber extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 phnum = String.format(PhoneNumberUtils.formatNumber(ed.getText().toString()));
-                if(ContactsManager.getInstance().isSavedContacts(phnum)){
+                if(ContactsManager.getInstance().isSavedContacts(context, phnum)){
 
                 }
                 if (getContactObjs().isSavedObj(phnum)) {

@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
@@ -35,8 +37,10 @@ public class SetTimeObject extends AppCompatActivity {
     private long startTime;
     private long endTime;
     private int[] requestCode;
+    private boolean isRepeat = false;
     TimePicker start;
     TimePicker end;
+    Switch repeatSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class SetTimeObject extends AppCompatActivity {
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         intent = new Intent(this, TimeSetBroadcastReceiver.class);
-
+        repeatSwitch = (Switch) findViewById(R.id.isRepeat);
         toggleSun = (ToggleButton) findViewById(R.id.sun);
         toggleMon = (ToggleButton) findViewById(R.id.mon);
         toggleTue = (ToggleButton) findViewById(R.id.tue);
@@ -59,23 +63,16 @@ public class SetTimeObject extends AppCompatActivity {
         Button confirm = (Button) findViewById(R.id.confirm);
         Button cancel = (Button) findViewById(R.id.cancel);
 
+        repeatSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                isRepeat = b;
+            }
+        });
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cal = Calendar.getInstance();
-
-                requestCode = new int[]{(int) System.currentTimeMillis(), (int) System.currentTimeMillis() + 1};
-                Log.d("시작", String.valueOf(requestCode[0]));
-                Log.d("종료", String.valueOf(requestCode[1]));
-                // 시작
-                setTime(cal, start);
-                startTime = cal.getTimeInMillis();
-                onRegisterAlarm(requestCode[0], true);
-                // 종료
-                setTime(cal, end);
-                endTime = cal.getTimeInMillis();
-                onRegisterAlarm(requestCode[1], false);
-                TimeObjectManager.getInstance().addTimeObj(makeTimeObj());
+                setAlarm();
                 finish();
             }
         });
@@ -85,6 +82,23 @@ public class SetTimeObject extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void setAlarm() {
+        cal = Calendar.getInstance();
+
+        requestCode = new int[]{(int) System.currentTimeMillis(), (int) System.currentTimeMillis() + 1};
+        Log.d("시작", String.valueOf(requestCode[0]));
+        Log.d("종료", String.valueOf(requestCode[1]));
+        // 시작
+        setTime(cal, start);
+        startTime = cal.getTimeInMillis();
+        onRegisterAlarm(requestCode[0], true);
+        // 종료
+        setTime(cal, end);
+        endTime = cal.getTimeInMillis();
+        onRegisterAlarm(requestCode[1], false);
+        TimeObjectManager.getInstance().addTimeObj(makeTimeObj());
     }
 
     /*  Register an alarm for setting options */
@@ -98,6 +112,7 @@ public class SetTimeObject extends AppCompatActivity {
             setDay(i, b);
             i++;
         }
+        intent.putExtra("isRepeat",isRepeat);
         intent.putExtra("week", weekSet);
         intent.putExtra("isOn", isOn);
         intent.putExtra("time", requestCode);

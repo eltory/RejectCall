@@ -65,6 +65,7 @@ public class ContactsManager {
                 contactItem.setCheck(false);
                 person.add(contactItem);
             } while (cursor.moveToNext());
+            contactObjs.setList(person);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -83,7 +84,7 @@ public class ContactsManager {
     /*  Get the RejectedList from Database  */
     private void missedList(Context context) {
         cursor = null;
-
+        Log.d("여기", "진입");
         if (unansweredLists.getList() == null) {
             unansweredLists.setList(new ArrayList<Unanswered>());
         }
@@ -91,35 +92,33 @@ public class ContactsManager {
             cursor = context.getContentResolver().query(
                     CallLog.Calls.CONTENT_URI,
                     new String[]{
+                            CallLog.Calls.TYPE,
                             CallLog.Calls.CACHED_NAME,
                             CallLog.Calls.NUMBER,
                             CallLog.Calls.DATE
                     },
-                    CallLog.Calls.TYPE + " = ? AND " + CallLog.Calls.NEW + " = ?",
-                    new String[]{
-                            Integer.toString(CallLog.Calls.REJECTED_TYPE),
-                            "1"
-                    },
+                    null,
+                    null,
                     CallLog.Calls.DATE + " DESC ");
-
             cursor.moveToFirst();
             if (cursor != null && cursor.getCount() > 0) {
                 do {
-                    String name = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
-                    String number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
-                    long date = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE));
-
-                    if (currTime < date) {
-                        if (unansweredLists.getUnanswered(number) == null) {
-                            Log.d("첨", "진입");
-                            missedCall = new Unanswered();
-                            missedCall.setName(name);
-                            missedCall.setPhoneNum(number);
-                            missedCall.setCalledTime(date);
-                            missedCall.setNumOfCalled(1);
-                            unansweredLists.getList().add(missedCall);
-                        } else {
-                            unansweredLists.getUnanswered(number).setNumOfCalled(unansweredLists.getUnanswered(number).getNumOfCalled() + 1);
+                    int type = Integer.parseInt(cursor.getString(cursor.getColumnIndex(CallLog.Calls.TYPE)));
+                    if (type == 3 || type == 5) {
+                        String name = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
+                        String number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
+                        long date = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE));
+                        if (currTime < date) {
+                            if (unansweredLists.getUnanswered(number) == null) {
+                                missedCall = new Unanswered();
+                                missedCall.setName(name);
+                                missedCall.setPhoneNum(number);
+                                missedCall.setCalledTime(date);
+                                missedCall.setNumOfCalled(1);
+                                unansweredLists.getList().add(missedCall);
+                            } else {
+                                unansweredLists.getUnanswered(number).setNumOfCalled(unansweredLists.getUnanswered(number).getNumOfCalled() + 1);
+                            }
                         }
                     }
                 }
@@ -156,8 +155,9 @@ public class ContactsManager {
         this.currTime = pref_time.getLong("currTime", System.currentTimeMillis());
     }
 
-    public boolean isSavedContacts(String num) {
-        return this.person.contains(num);
+    public boolean isSavedContacts(Context context, String num) {
+        getContactsList(context);
+        return this.getContactObjs(context).isSavedObj(num);
     }
 
     public boolean hasUnansweredList() {
@@ -166,7 +166,7 @@ public class ContactsManager {
         return false;
     }
 
-    public boolean isExceptedList(Context context, String phoneNumber){
+    public boolean isExceptedList(Context context, String phoneNumber) {
         return getContactObjs(context).isSavedObj(phoneNumber);
     }
 
