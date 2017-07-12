@@ -33,6 +33,8 @@ public class OptionPrefActivity extends PreferenceFragment {
                 return true;
             }
         });
+
+        /*  Set detail options  */
         setDetail = (SwitchPreference) findPreference("setting");
         setDetail.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -45,14 +47,16 @@ public class OptionPrefActivity extends PreferenceFragment {
         });
 
 
-        block = (SwitchPreference) findPreference("autoBlock");
+       /* block = (SwitchPreference) findPreference("autoBlock");
         block.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
-
+                it = new Intent(getActivity(), CallingService.class);
+                it.putExtra("setOption", "ok");
+                getActivity().startService(it);
                 return true;
             }
-        });
+        });*/
 
         /*  Set each entrance */
         MySwitchPreference autoMessage = (MySwitchPreference) findPreference("autoMessage");
@@ -61,8 +65,8 @@ public class OptionPrefActivity extends PreferenceFragment {
         autoTime.setNum(2);
         MySwitchPreference exceptNumber = (MySwitchPreference) findPreference("exceptNumber");
         exceptNumber.setNum(3);
-        MySwitchPreference autoBlock = (MySwitchPreference) findPreference("autoBlock");
-        autoBlock.setNum(0);
+       MySwitchPreference autoBlock = (MySwitchPreference) findPreference("autoBlock");
+        autoBlock.setNum(4);
     }
 
     public void setCheck() {

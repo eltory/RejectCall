@@ -15,4 +15,9 @@
         android:id="@+id/lately_version"
         android:text="최신 버전 : "
         android:layout_gravity="center_horizontal" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="업데이트"
+        android:id="@+id/update"/>
 </LinearLayout>

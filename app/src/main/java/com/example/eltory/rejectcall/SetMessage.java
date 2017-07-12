@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.telecom.Call;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.tsengvn.typekit.Typekit;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +39,7 @@ import butterknife.ButterKnife;
  * Created by eltory on 2017-03-18.
  */
 
-public class SetMessage extends AppCompatActivity {
+public class SetMessage extends Font {
 
     public static final String SEND_MSG = "지금은 전화를 받을 수 없습니다.";
     private String msgString;

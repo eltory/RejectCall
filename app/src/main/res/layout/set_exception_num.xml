@@ -5,57 +5,79 @@
     android:orientation="vertical"
     android:padding="15dp">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="익셉션" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:background="@drawable/layer_layout"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/set_except_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="자동 수신거부 상태에도 예외적으로 수신할 번호를 입력하세요" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/layout_border"
-            android:paddingLeft="5dp">
-
-            <EditText
-                android:id="@+id/addPNum"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:hint="예외로 설정할 번호를 입력하세요."
-                android:singleLine="true"
-                android:textColorHint="@color/colorPrimaryDark"
-                android:textCursorDrawable="@color/colorPrimary"
-                android:inputType="phone" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/addNum"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="추가하기" />
+            android:orientation="horizontal"
+            android:weightSum="1">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/layout_border"
+                android:paddingLeft="5dp">
+
+                <EditText
+                    android:id="@+id/addPNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="예외로 설정할 번호를 입력하세요."
+                    android:inputType="phone"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorPrimaryDark"
+                    android:textCursorDrawable="@color/colorPrimary" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addNum"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="3"
+                android:background="@color/colorAccent"
+                android:text="추가하기" />
+
+        </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/find"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|right"
-        android:text="연락처에서 찾기" />
-
-    <ListView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/excepted_list"
-        android:layout_gravity="center_horizontal" />
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/find"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|right"
+            android:background="@color/colorAccent"
+            android:src="@drawable/ic_search"
+            android:text="연락처에서 찾기" />
+
+        <ListView
+            android:divider="@null"
+            android:dividerHeight="5dp"
+            android:id="@+id/excepted_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+    </FrameLayout>
 </LinearLayout>

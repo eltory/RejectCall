@@ -16,8 +16,8 @@ public class TimeObjectManager {
     private ArrayList<TimeObj> list;
     private ListTimeObj timeObjs;
     private ComplexPreferences complexPreferences;
-    private Context context = null;
-    SimpleDateFormat simpleFormat = new SimpleDateFormat("HH:mm");
+    private Context context;
+    SimpleDateFormat simpleFormat = new SimpleDateFormat("a hh:mm");
 
     private TimeObjectManager() {
         timeObjs = new ListTimeObj();
@@ -44,7 +44,7 @@ public class TimeObjectManager {
         setTimeObjs();
     }
 
-
+    /*  Return the time from start to end  */
     public String getStartEndTime(int requestCode) {
         return simpleFormat.format(new Date(findTimeObj(requestCode).getStartTime())) + "/" + simpleFormat.format(new Date(findTimeObj(requestCode).getEndTime()));
     }

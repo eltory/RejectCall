@@ -26,7 +26,7 @@ import butterknife.BindView;
 /**
  * Created by eltory on 2017-04-23.
  */
-public class SetTimeObject extends AppCompatActivity {
+public class SetTimeObject extends Font {
 
     private AlarmManager alarmManager;
     private PendingIntent pIntent;

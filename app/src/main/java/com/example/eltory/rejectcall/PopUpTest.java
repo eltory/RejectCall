@@ -30,22 +30,20 @@ public class PopUpTest extends Activity {
 
     @BindView(R.id.tv_content)
     TextView tvCont;
-    Context view = this;
-    UnansweredListAdapter adapter;
+    private UnansweredListAdapter adapter;
+    protected ListView tv;
+    Button cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Log.d("팝업","진입");
 
         final WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount = 0.5f;
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.popup_unanswered_list);
-        final View view2 = this.getWindow().getDecorView();
 
          /*  AdMob ad banner  */
         AdView mAdView = (AdView) findViewById(R.id.adView_);
@@ -53,12 +51,12 @@ public class PopUpTest extends Activity {
         mAdView.setVisibility(View.VISIBLE);
         mAdView.loadAd(adRequest);
 
-        ListView tv = (ListView) findViewById(R.id.tv_content);
+        tv = (ListView) findViewById(R.id.tv_content);
+        cancel = (Button) findViewById(R.id.close_popup);
+
         adapter = new UnansweredListAdapter();
         adapter.addItem();
         tv.setAdapter(adapter);
-        Button cancel = (Button) findViewById(R.id.close_popup);
-        final WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override

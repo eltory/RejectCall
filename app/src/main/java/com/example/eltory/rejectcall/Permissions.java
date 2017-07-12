@@ -31,7 +31,7 @@ public class Permissions extends Activity {
         };
         new TedPermission(context)
                 .setPermissionListener(permissionListener)
-                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setDeniedMessage("권한을 설정하지 않을시 앱의 기능을 사용하지 못할 수 있습니다. \n\n권한을 설정하시려면 [설정] > [앱 권한]을 설정하세요.")
                 .setPermissions(Manifest.permission.READ_PHONE_STATE
                         , Manifest.permission.CALL_PHONE
                         , Manifest.permission.SEND_SMS

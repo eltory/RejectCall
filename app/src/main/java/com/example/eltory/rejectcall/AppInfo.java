@@ -1,11 +1,16 @@
 package com.example.eltory.rejectcall;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 
@@ -14,34 +19,56 @@ import butterknife.BindView;
  */
 public class AppInfo extends AppCompatActivity {
 
-    public static String version = "2";
+    public String cVersion;
     public String lVersion;
     TextView currVersion;
     TextView latestVersion;
+    Button update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_inform);
-        PackageInfo pi = null;
+
+        // 마켓최신버젼 가져오기
+        lVersion = getMarketVersion();
+        cVersion = getCurrAppVersion();
+        currVersion = (TextView) findViewById(R.id.current_version);
+        latestVersion = (TextView) findViewById(R.id.lately_version);
+        update = (Button) findViewById(R.id.update);
+
+        currVersion.setText("현재 버전 : " + cVersion);
+        latestVersion.setText("최신 버젼 : " + lVersion);
+
+        // 최신버전으로 업데이트 하기
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (lVersion != null && (Float.valueOf(lVersion) - Float.valueOf(cVersion) > 0.0)) {
+                    Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
+                    marketLaunch.setData(Uri.parse("market://search?q=" + getPackageName()));
+                    startActivity(marketLaunch);
+                }else{
+                    Toast.makeText(AppInfo.this,"이미 최신버전 입니다!",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public String getMarketVersion() {
+        return CheckUpdate.getMarketVersion(getPackageName());
+    }
+
+    public String getCurrAppVersion() {
+        String device_version = null;
 
         try {
-            pi = getPackageManager().getPackageInfo(getPackageName(), 0);
-
+            device_version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
-        version = pi.versionName;
-        getVersion();
-        currVersion = (TextView) findViewById(R.id.current_version);
-        latestVersion = (TextView) findViewById(R.id.lately_version);
-
-        currVersion.setText("현재 버전 : " + version);
-        latestVersion.setText("최신 버젼 : " + lVersion);
-    }
-
-    public void getVersion() {
-        this.lVersion = "1.1";
+        return device_version;
     }
 }
+
+

@@ -23,7 +23,7 @@ import java.util.Date;
 /**
  * Created by eltory on 2017-03-18.
  */
-public class SetTime extends AppCompatActivity {
+public class SetTime extends Font {
 
     // TODO : 시간 반복 설정이랑 객체마다 SMS 등 세부 셋팅 지정
     private ListView listView;
@@ -54,8 +54,9 @@ public class SetTime extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 onUnregisterAlarm(((TimeObj) adapter.getItem(position)).getRequestCodeSet()[0]);
                                 onUnregisterAlarm(((TimeObj) adapter.getItem(position)).getRequestCodeSet()[1]);
-                                NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-                                nm.cancel(111);
+                                NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                if (nm != null)
+                                    nm.cancel(111);
                                 adapter.removeItem(position);
                                 adapter.notifyDataSetChanged();
                             }

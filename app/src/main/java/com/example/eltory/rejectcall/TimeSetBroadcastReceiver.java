@@ -34,7 +34,7 @@ public class TimeSetBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // sTODO : 부팅 후 부재중 리스트 리시버 만들기
+        // TODO : 부팅 후 부재중 리스트 리시버 만들기
         pref = PreferenceManager.getDefaultSharedPreferences(context);
         editor = pref.edit();
         week = intent.getIntExtra("week", 0);
@@ -49,10 +49,11 @@ public class TimeSetBroadcastReceiver extends BroadcastReceiver {
 
         if (isOn) {
             requestCode_s = intent.getIntExtra("time", 0);
-            Log.d("리퀘스트코드", String.valueOf(requestCode_s));
+
             String startEndTime = TimeObjectManager.getInstance().getStartEndTime(requestCode_s);
             String[] timeSet = startEndTime.split("/");
             editor.putBoolean("autoReject", true).commit();
+
             notification = new Notification.Builder(context)
                     .setAutoCancel(false)
                     .setContentTitle("시작시간  " + timeSet[0] + " ~ 종료시간  " + timeSet[1])
@@ -61,7 +62,8 @@ public class TimeSetBroadcastReceiver extends BroadcastReceiver {
                     .build();
             notification.flags = Notification.FLAG_NO_CLEAR;
             nm.notify(111, notification);
-        } else {isRepeat = intent.getBooleanExtra("isRepeat", false);
+        } else {
+            isRepeat = intent.getBooleanExtra("isRepeat", false);
             if (isRepeat) {
                 onRegisterAlarmByItem(context, TimeObjectManager.getInstance().getTimeObjs(context).getTimeObj(intent.getIntExtra("time", 0)));
             }
@@ -84,11 +86,12 @@ public class TimeSetBroadcastReceiver extends BroadcastReceiver {
         e_intent.putExtra("isOn", "isOff");
         e_intent.putExtra("isRepeat", true);
         s_intent.putExtra("time", timeObj.getRequestCodeSet()[1]);
+
         PendingIntent s_pIntent = PendingIntent.getBroadcast(context, timeObj.getRequestCodeSet()[0], s_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent e_pIntent = PendingIntent.getBroadcast(context, timeObj.getRequestCodeSet()[1], e_intent, PendingIntent.FLAG_UPDATE_CURRENT);          Log.d("리핏","0");
+        PendingIntent e_pIntent = PendingIntent.getBroadcast(context, timeObj.getRequestCodeSet()[1], e_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         // SDK 버전별로 정확한 시간에 작동시키기
         if (Build.VERSION.SDK_INT >= 23) {
-
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeObj.getStartTime(), s_pIntent);
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeObj.getEndTime(), e_pIntent);
         } else {

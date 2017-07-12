@@ -14,7 +14,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 
@@ -24,6 +26,7 @@ import butterknife.BindView;
 public class ListViewAdapter extends BaseAdapter {
 
     private ArrayList<TimeObj> optionSettingList;
+    SimpleDateFormat simpleFormat = new SimpleDateFormat("a hh:mm");
 
     // 화면에 표시될 View(Layout 이 inflate 된)으로부터 위젯에 대한 참조 획득
     @BindView(R.id.descStr)
@@ -63,7 +66,7 @@ public class ListViewAdapter extends BaseAdapter {
         // TODO : 시간리스트뷰 정리하기
         if (optionSettingItem != null) {
 
-            title.setText(optionSettingItem.getStartTime() + "/" + optionSettingItem.getEndTime());
+            title.setText(simpleFormat.format(new Date(optionSettingItem.getStartTime())) + " ~ " + simpleFormat.format(new Date(optionSettingItem.getEndTime())));
             desc.setText(optionSettingItem.getWeekSet());
             optionSwitch.setChecked(false);
         }

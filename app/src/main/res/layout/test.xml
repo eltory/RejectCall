@@ -7,14 +7,11 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <com.ssomai.android.scalablelayout.ScalableLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/layer_layout"
-        sl:scale_base_height="380"
-        sl:scale_base_width="1280">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/day_set"
@@ -23,10 +20,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="7"
-            sl:scale_top="25"
-            sl:scale_height="180"
-            sl:scale_width="1280">
+            android:weightSum="7">
 
             <ToggleButton
                 android:id="@+id/sun"
@@ -100,129 +94,88 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="반복 설정하기"
-                    sl:scale_left="40"
-                    sl:scale_top="260"
-                    sl:scale_height="150"
-                    sl:scale_textsize="47"
-                    sl:scale_width="1280" />
 
-                <Switch
-                    android:id="@+id/isRepeat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    sl:scale_left="1070"
-                    sl:scale_top="200"
-                    sl:scale_height="150"
-                    sl:scale_textsize="50"
-                    sl:scale_width="200"/>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="반복 설정하기" />
 
-    </com.ssomai.android.scalablelayout.ScalableLayout>
+            <Switch
+                android:id="@+id/isRepeat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <com.ssomai.android.scalablelayout.ScalableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:background="@drawable/layer_layout"
-        android:layout_marginBottom="10dp"
-        sl:scale_base_height="600"
-        sl:scale_base_width="1280">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="시작시간"
-            android:textColor="@color/colorAccent"
-            sl:scale_left="40"
-            sl:scale_top="40"
-            sl:scale_height="500"
-            sl:scale_textsize="47"
-            sl:scale_width="300" />
+            android:text="시작시간" />
 
         <TimePicker
             android:id="@+id/start_time_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:amPmBackgroundColor="@color/colorPrimary"
+            android:fadingEdge="vertical"
             android:numbersInnerTextColor="#00a941"
-            android:timePickerMode="spinner"
-            sl:scale_height="600"
-            sl:scale_left="300"
-            sl:scale_textsize="50"
-            sl:scale_width="980" />
+            android:timePickerMode="spinner" />
 
+    </LinearLayout>
 
-    </com.ssomai.android.scalablelayout.ScalableLayout>
-
-    <com.ssomai.android.scalablelayout.ScalableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
+    <LinearLayout
         android:background="@drawable/layer_layout"
-        sl:scale_base_height="600"
-        sl:scale_base_width="1280">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="종료시간"
-            android:textColor="@color/colorAccent"
-            sl:scale_height="500"
-            sl:scale_left="40"
-            sl:scale_top="40"
-            sl:scale_textsize="47"
-            sl:scale_width="450" />
+            android:text="종료시간" />
 
         <TimePicker
             android:id="@+id/end_time_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:timePickerMode="spinner"
-            sl:scale_height="600"
-            sl:scale_left="300"
-            sl:scale_width="980" />
+            android:timePickerMode="spinner" />
+    </LinearLayout>
 
-    </com.ssomai.android.scalablelayout.ScalableLayout>
+    <Button
+        android:id="@+id/confirm"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/holo_green_dark"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="확인" />
 
-    <com.ssomai.android.scalablelayout.ScalableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        sl:scale_base_height="270"
-        sl:scale_base_width="1280">
+    <Button
+        android:id="@+id/cancel"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/holo_green_dark"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="취소" />
 
-        <Button
-            android:id="@+id/confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@drawable/btn_confirm"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            sl:scale_height="270"
-            sl:scale_left="260"
-            sl:scale_top="200"
-            sl:scale_textsize="50"
-            sl:scale_width="300" />
-
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@drawable/btn_cancle"
-            android:foreground="?attr/selectableItemBackground"
-            sl:scale_height="270"
-            sl:scale_left="700"
-            sl:scale_textsize="50"
-            sl:scale_width="300" />
-
-    </com.ssomai.android.scalablelayout.ScalableLayout>
 </LinearLayout>

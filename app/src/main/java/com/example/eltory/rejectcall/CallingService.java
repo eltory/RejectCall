@@ -76,16 +76,21 @@ public class CallingService extends Service {
         if (intent.getStringExtra(EXTRA_CALL_NUMBER) != null) {
             incomingNumber = intent.getStringExtra(EXTRA_CALL_NUMBER);
             setOptions();
-           // Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+
+            tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+
+            // 모르는번호 자동거절
+            if (this.checkedOptions[5] && !ContactsManager.getInstance().isHeadNumber(getApplicationContext(), incomingNumber))
+                setBlock();
+
             // 수신거절 설정조건문 -> 자동응답거부 설정여부
             if (this.checkedOptions[0]) {
                 if (this.checkedOptions[1] && this.checkedOptions[4]) {
-                    Log.d("익셉","진입");
                     if (ContactsManager.getInstance().isExceptedList(getApplicationContext(), incomingNumber))
                         return;
                 }
-                tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                 setBlock();
+                setMSG();
             }
         }
 
@@ -116,18 +121,21 @@ public class CallingService extends Service {
             telephonyService = (ITelephony) m.invoke(tm);
             telephonyService.endCall();
 
-            // 메세지 자동 발송조건문 -> 세부설정 & 자동문자 발송 설정여부
-            if (this.checkedOptions[1] && this.checkedOptions[2]) {
-                // 모르는 번호 문자보내기 금지
-                if (this.checkedOptions[6]) {
-                    if (ContactsManager.getInstance().isSavedContacts(getApplicationContext(), incomingNumber))
-                        return;
-                }
-                // TODO : 상황에 맞는 메세지 가져오기, 모르는번호 메세지 처리하기
-                sendSMS(incomingNumber, pref_msg.getString("MSG", SetMessage.SEND_MSG));
-            }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setMSG() {
+        // 메세지 자동 발송조건문 -> 세부설정 & 자동문자 발송 설정여부
+        if (this.checkedOptions[1] && this.checkedOptions[2]) {
+            // 모르는 번호 문자보내기 금지
+            if (this.checkedOptions[6]) {
+                if (ContactsManager.getInstance().isSavedContacts(getApplicationContext(), incomingNumber))
+                    return;
+            }
+            // TODO : 상황에 맞는 메세지 가져오기, 모르는번호 메세지 처리하기
+            sendSMS(incomingNumber, pref_msg.getString("MSG", SetMessage.SEND_MSG));
         }
     }
 

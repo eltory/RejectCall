@@ -22,7 +22,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/banana"
+        android:icon="@drawable/ic_launch"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
@@ -43,10 +43,10 @@
             android:name=".AppInfo"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Option"
+            android:name=".test"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TimeTest"
+            android:name=".SetBlock"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SetMessage"
@@ -63,9 +63,7 @@
         <activity
             android:name=".SettingTest"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".TestTest"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ContactsListForExcept"
             android:screenOrientation="portrait" />

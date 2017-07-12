@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -38,34 +39,35 @@ import java.util.Set;
  */
 public class SetExceptNumber extends AppCompatActivity {
 
-    private static Set<String> exceptNumberSet = new HashSet<>();
-    private ArrayList numberList;
-    private ArrayList person;
     private final Context context = this;
-
     private ArrayList<ContactItem> list;
     private ListContactObj contactObjs;
     private ComplexPreferences complexPreferences;
+    private EditText editExceptNum;
+    private String phnum;
+    protected ListView listView;
 
-    String phnum;
     ContactAdapter adapter;
-    ListView listView;
+    FloatingActionButton findBtn;
+    Button addBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_exception_num);
+
+        editExceptNum = (EditText) findViewById(R.id.addPNum);
+        findBtn = (FloatingActionButton) findViewById(R.id.find);
+        addBtn = (Button) findViewById(R.id.addNum);
         listView = (ListView) findViewById(R.id.excepted_list);
+
         adapter = new ContactAdapter();
         adapter.addItem(getContactObjs().getList());
         listView.setAdapter(adapter);
-        final EditText ed = (EditText) findViewById(R.id.addPNum);
-        Button btn2 = (Button) findViewById(R.id.find);
-        Button btn = (Button) findViewById(R.id.addNum);
-
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                 final int index = i;
                 android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(SetExceptNumber.this);
                 alert.setTitle("예외번호 삭제");
@@ -91,35 +93,45 @@ public class SetExceptNumber extends AppCompatActivity {
                 return true;
             }
         });
-        btn2.setOnClickListener(new View.OnClickListener() {
+
+        findBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(SetExceptNumber.this, ContactsListForExcept.class), 1);
             }
         });
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                phnum = String.format(PhoneNumberUtils.formatNumber(ed.getText().toString()));
-                if(ContactsManager.getInstance().isSavedContacts(context, phnum)){
+                phnum = String.format(PhoneNumberUtils.formatNumber(editExceptNum.getText().toString()));
 
-                }
-                if (getContactObjs().isSavedObj(phnum)) {
-                    Toast.makeText(SetExceptNumber.this, "이미 저장 된 번호입니다.", Toast.LENGTH_SHORT).show();
+                if(phnum.equals("")){
+                    Toast.makeText(SetExceptNumber.this, "번호를 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ContactItem person = new ContactItem();
-                person.setPhoneNumber(phnum);
-                person.setName("알수없음");
-                getContactObjs().addContact(person);
-                setContactObjs();
-                adapter.addItem(getContactObjs().getList());
-                adapter.notifyDataSetChanged();
+                else {
+                    if (ContactsManager.getInstance().isExceptedList(context, phnum)) {
+
+                    }
+                    if (getContactObjs().isSavedObj(phnum)) {
+                        Toast.makeText(SetExceptNumber.this, "이미 저장 된 번호입니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    ContactItem person = new ContactItem();
+                    person.setPhoneNumber(phnum);
+                    person.setName("알수없음");
+                    getContactObjs().addContact(person);
+                    setContactObjs();
+                    adapter.addItem(getContactObjs().getList());
+                    adapter.notifyDataSetChanged();
+                    editExceptNum.setText("");
+                }
             }
         });
     }
 
+    /*  Add the lists from the result of request on the listview  */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {

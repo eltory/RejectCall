@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 /**
@@ -13,18 +17,49 @@ import android.widget.ListView;
  */
 public class ContactsListForExcept extends AppCompatActivity {
 
+    protected ListView listView;
+    private ContactAdapter adapter;
+    private Button addToList;
+    private Intent returnIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact_list);
-        ListView listView = (ListView) findViewById(R.id.contact_list);
-        final ContactAdapter adapter = new ContactAdapter();
-        adapter.addItem(ContactsManager.getInstance().getContactsList(this));
-        listView.setAdapter(adapter);
-        Button btn = (Button) findViewById(R.id.add_list);
-        final Intent returnIntent = new Intent();
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        listView = (ListView) findViewById(R.id.contact_list);
+        addToList = (Button) findViewById(R.id.add_list);
+        adapter = new ContactAdapter();
+        adapter.addItem(ContactsManager.getInstance().getContactsList(this));
+        listView.setTextFilterEnabled(true);
+        listView.setAdapter(adapter);
+
+        EditText searchName = (EditText) findViewById(R.id.search_contact);
+        searchName.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable edit) {
+                String filterText = edit.toString();
+                if (filterText.length() > 0) {
+                    listView.setFilterText(filterText);
+                } else {
+                    listView.clearTextFilter();
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
+
+        returnIntent = new Intent();
+
+        addToList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 returnIntent.putExtra("list", adapter.getList());

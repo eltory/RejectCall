@@ -38,6 +38,7 @@
         android:id="@+id/setSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contextClickable="false" />
+        android:contextClickable="false"
+        android:visibility="invisible"/>
 
 </LinearLayout>

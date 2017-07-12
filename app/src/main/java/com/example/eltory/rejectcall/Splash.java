@@ -21,6 +21,6 @@ public class Splash extends Activity {
                 finish();
                 overridePendingTransition(0, 0);
             }
-        }, 3000);
+        }, 2500);
     }
 }

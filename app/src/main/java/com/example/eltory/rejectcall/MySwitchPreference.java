@@ -37,7 +37,6 @@ public class MySwitchPreference extends SwitchPreference {
         ViewGroup vg = (ViewGroup) view;
         RelativeLayout titleView = (RelativeLayout) vg.getChildAt(1);
         TextView title = (TextView) view.findViewById(android.R.id.title);
-
         //title.setTextColor(getContext().getResources().getColor(R.color.title));
 
         // Ripple 효과주기
@@ -66,6 +65,6 @@ public class MySwitchPreference extends SwitchPreference {
         else if (this.num == 3)
             getContext().startActivity(new Intent(getContext(), SetExceptNumber.class));
         else
-            getContext().startActivity(new Intent(getContext(), SetTime.class));
+            getContext().startActivity(new Intent(getContext(), SetBlock.class));
     }
 }

@@ -11,6 +11,8 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by eltory on 2017-05-18.
@@ -108,6 +110,7 @@ public class ContactsManager {
                         String name = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
                         String number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
                         long date = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE));
+
                         if (currTime < date) {
                             if (unansweredLists.getUnanswered(number) == null) {
                                 missedCall = new Unanswered();
@@ -133,11 +136,6 @@ public class ContactsManager {
         }
     }
 
-    public ContactItem getAnItem(String phoneNumber) {
-        // 리턴 제대로 바꾸기
-        return person.get(1);
-    }
-
     public void setMissedCall(Context context) {
         missedList(context);
     }
@@ -155,9 +153,34 @@ public class ContactsManager {
         this.currTime = pref_time.getLong("currTime", System.currentTimeMillis());
     }
 
-    public boolean isSavedContacts(Context context, String num) {
-        getContactsList(context);
-        return this.getContactObjs(context).isSavedObj(num);
+    public boolean isSavedContacts(Context context, String phoneNumber) {
+        Iterator iterator = getContactsList(context).iterator();
+
+        while (iterator.hasNext()) {
+            ContactItem person = (ContactItem) iterator.next();
+
+            if (person.getPhoneNumber().equals(phoneNumber))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean isHeadNumber(Context context, String phoneNumber) {
+        SharedPreferences pref_head_num = context.getSharedPreferences("HeadNum", context.MODE_PRIVATE);
+        Set headNumSet = pref_head_num.getStringSet("headNumSet", null);
+
+        if (headNumSet != null) {
+            
+            Iterator iterator = headNumSet.iterator();
+            Log.d("진입번호", String.valueOf(phoneNumber));
+
+            while (iterator.hasNext()) {
+                Log.d("헤드번호", (String) iterator.next());
+                if (phoneNumber.startsWith((String) iterator.next()))
+                    return true;
+            }
+        }
+        return false;
     }
 
     public boolean hasUnansweredList() {

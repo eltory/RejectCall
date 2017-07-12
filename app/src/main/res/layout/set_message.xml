@@ -2,71 +2,92 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/back"
     android:orientation="vertical"
     android:padding="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="5dp">
-
-        <TextView
-            android:id="@+id/set_msg_except_view"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="4"
-            android:text="모르는 번호는 문자보내기 제외" />
-
-        <Switch
-            android:id="@+id/set_msg_except"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_gravity="right"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/layer_layout"
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/layout_border"
-            android:paddingLeft="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-            <EditText
-                android:id="@+id/addText"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@null"
-                android:hint="보내실 메세지를 입력해주세요."
-                android:singleLine="true"
-                android:textColorHint="@color/colorPrimaryDark"
-                android:textCursorDrawable="@color/colorPrimary" />
+                android:layout_weight="1"
+                android:background="@drawable/layout_border"
+                android:paddingLeft="5dp">
+
+                <EditText
+                    android:id="@+id/addText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="보내실 메세지를 입력해주세요."
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorPrimaryDark"
+                    android:textCursorDrawable="@color/colorPrimary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/addMessage"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@android:color/holo_green_dark"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="추가하기" />
+
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layoutMode="clipBounds"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp">
 
-        <Button
-            android:id="@+id/addMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="추가하기" />
+            <TextView
+                android:id="@+id/set_msg_except_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:text="모르는 번호는 문자보내기 제외" />
+
+            <Switch
+                android:id="@+id/set_msg_except"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="right"
+                android:layout_weight="1" />
+        </LinearLayout>
 
     </LinearLayout>
 
     <ListView
         android:id="@+id/msgLV"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
+        android:background="@null"
         android:choiceMode="singleChoice"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+        android:divider="@null"
+        android:dividerHeight="4dp" />
 
 </LinearLayout>

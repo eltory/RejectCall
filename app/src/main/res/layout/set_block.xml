@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/set_block_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="특정번호로 시작하는 전화번호를 모두 수신거부합니다." />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_border"
+            android:paddingLeft="5dp">
+
+            <EditText
+                android:id="@+id/addHNum"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="특정 시작번호를 입력하세요."
+                android:inputType="phone"
+                android:singleLine="true"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:textCursorDrawable="@color/colorPrimary" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addHeadNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="추가하기" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/head_number_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>

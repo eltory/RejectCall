@@ -3,6 +3,7 @@
     xmlns:sl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/back"
     android:orientation="vertical">
 
     <FrameLayout
@@ -18,10 +19,13 @@
             sl:scale_base_width="1280">
 
             <ListView
+                android:background="@null"
                 android:id="@+id/time_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:divider="@null"
+                android:dividerHeight="4dp"
                 sl:scale_height="1840"
                 sl:scale_width="1180" />
         </com.ssomai.android.scalablelayout.ScalableLayout>
