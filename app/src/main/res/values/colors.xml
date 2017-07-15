@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#ffd500</color>
     <color name="colorPrimaryDark">#ce9505</color>
-    <color name="colorAccent">#269700</color>
+    <color name="colorAccent">@android:color/holo_green_dark</color>
     <color name="divider">#7f979797</color>
     <color name="title">#022d89</color>
     <color name="back">#efefef</color>

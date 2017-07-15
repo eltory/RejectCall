@@ -44,6 +44,9 @@ public class MainActivity extends Font{
                 if (id == R.id.info) {
                     startActivity(new Intent(MainActivity.this, AppInfo.class));
                 }
+                if (id == R.id.license) {
+                    startActivity(new Intent(MainActivity.this, License.class));
+                }
                 return false;
             }
         });

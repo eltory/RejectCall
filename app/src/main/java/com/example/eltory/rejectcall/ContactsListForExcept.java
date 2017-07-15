@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -31,7 +32,25 @@ public class ContactsListForExcept extends AppCompatActivity {
         addToList = (Button) findViewById(R.id.add_list);
         adapter = new ContactAdapter();
         adapter.addItem(ContactsManager.getInstance().getContactsList(this));
+        adapter.isEnter(1);
         listView.setTextFilterEnabled(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ContactItem contactItem = (ContactItem) listView.getItemAtPosition(position);
+
+                if (!contactItem.getCheck()) {
+                    contactItem.setCheck(true);
+                    if (!ContactsManager.getInstance().isExceptedList(ContactsListForExcept.this, contactItem.getPhoneNumber()))
+                        adapter.addToList(contactItem);
+                } else {
+                    contactItem.setCheck(false);
+                    adapter.removeFromList(contactItem);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+        });
         listView.setAdapter(adapter);
 
         EditText searchName = (EditText) findViewById(R.id.search_contact);

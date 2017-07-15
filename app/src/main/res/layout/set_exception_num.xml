@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -18,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:padding="5dp"
             android:text="자동 수신거부 상태에도 예외적으로 수신할 번호를 입력하세요" />
 
         <LinearLayout
@@ -40,7 +42,7 @@
                     android:background="@null"
                     android:hint="예외로 설정할 번호를 입력하세요."
                     android:inputType="phone"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:textColorHint="@color/colorPrimaryDark"
                     android:textCursorDrawable="@color/colorPrimary" />
             </LinearLayout>
@@ -50,9 +52,8 @@
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_weight="3"
-                android:background="@color/colorAccent"
+                android:background="@android:color/holo_green_dark"
                 android:text="추가하기" />
 
         </LinearLayout>
@@ -62,22 +63,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ListView
+            android:id="@+id/excepted_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:divider="@null"
+            android:dividerHeight="5dp" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/find"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|right"
+            android:layout_gravity="right|bottom"
             android:background="@color/colorAccent"
-            android:src="@drawable/ic_search"
-            android:text="연락처에서 찾기" />
-
-        <ListView
-            android:divider="@null"
-            android:dividerHeight="5dp"
-            android:id="@+id/excepted_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+            android:elevation="20dp"
+            android:src="@drawable/search"
+            android:text="연락처에서 찾기"
+            app:backgroundTint="@android:color/holo_green_dark" />
     </FrameLayout>
 </LinearLayout>

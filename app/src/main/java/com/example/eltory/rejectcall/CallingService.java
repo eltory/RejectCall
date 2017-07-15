@@ -80,7 +80,7 @@ public class CallingService extends Service {
             tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
             // 모르는번호 자동거절
-            if (this.checkedOptions[5] && !ContactsManager.getInstance().isHeadNumber(getApplicationContext(), incomingNumber))
+            if (this.checkedOptions[5] && ContactsManager.getInstance().isHeadNumber(getApplicationContext(), incomingNumber))
                 setBlock();
 
             // 수신거절 설정조건문 -> 자동응답거부 설정여부
@@ -114,12 +114,30 @@ public class CallingService extends Service {
 
     /*  Auto Call Rejection (The following, I'll call ACR or ACB)  */
     private void setBlock() {
+        Log.d("블럭","진입");
         try {
+            /*Log.d("블럭","진입1");
             Class c = Class.forName(tm.getClass().getName());
+            Log.d("블럭","진입2");
             Method m = c.getDeclaredMethod("getITelephony");
+            Log.d("블럭","진입3");
             m.setAccessible(true);
+            Log.d("블럭","진입4");
             telephonyService = (ITelephony) m.invoke(tm);
+            Log.d("블럭","진입5");
             telephonyService.endCall();
+            Log.d("블럭","진입6");*/
+            Log.d("블럭","진입1");
+            TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            Log.d("블럭","진입2");
+            Class c = Class.forName(tm.getClass().getName());Log.d("블럭","진입3");
+            Method m = c.getDeclaredMethod("getITelephony");Log.d("블럭","진입4");
+            m.setAccessible(true);Log.d("블럭","진입5");
+            Object telephonyService = m.invoke(tm); Log.d("블럭","진입6");// Get the internal ITelephony object
+            c = Class.forName(telephonyService.getClass().getName()); Log.d("블럭","진입7");// Get its class
+            m = c.getDeclaredMethod("endCall"); Log.d("블럭","진입8");// Get the "endCall()" method
+            m.setAccessible(true); Log.d("블럭","진입9");// Make it accessible
+            m.invoke(telephonyService);Log.d("블럭","진입10");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,10 +149,10 @@ public class CallingService extends Service {
         if (this.checkedOptions[1] && this.checkedOptions[2]) {
             // 모르는 번호 문자보내기 금지
             if (this.checkedOptions[6]) {
-                if (ContactsManager.getInstance().isSavedContacts(getApplicationContext(), incomingNumber))
+                if (!ContactsManager.getInstance().isSavedContacts(getApplicationContext(), incomingNumber))
                     return;
             }
-            // TODO : 상황에 맞는 메세지 가져오기, 모르는번호 메세지 처리하기
+            // TODO : 상황에 맞는 메세지 가져오기, 모르는번호 메세지 처리하기 -> 버전 업데이트 후
             sendSMS(incomingNumber, pref_msg.getString("MSG", SetMessage.SEND_MSG));
         }
     }
@@ -160,7 +178,7 @@ public class CallingService extends Service {
         }, new IntentFilter(SENT));
 
         SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, msg, sentPI, deliveredPI);
+        sms.sendTextMessage(phoneNumber, null, "[BananaCall] " + msg, sentPI, deliveredPI);
     }
 
     @Override

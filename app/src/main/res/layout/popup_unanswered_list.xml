@@ -12,7 +12,7 @@
         android:layout_width="320dp"
         android:layout_height="400dp"
         android:layout_gravity="center"
-        android:background="#005663"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
         <LinearLayout

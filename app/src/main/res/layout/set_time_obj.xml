@@ -116,11 +116,11 @@
                     android:id="@+id/isRepeat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    sl:scale_left="1070"
+                    sl:scale_left="870"
                     sl:scale_top="200"
                     sl:scale_height="150"
                     sl:scale_textsize="50"
-                    sl:scale_width="200"/>
+                    sl:scale_width="400"/>
 
     </com.ssomai.android.scalablelayout.ScalableLayout>
 
@@ -204,9 +204,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@drawable/btn_confirm"
+            android:background="@drawable/btn_round"
+            android:text="확인"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:foreground="?attr/selectableItemBackgroundBorderless"
-            sl:scale_height="270"
+            sl:scale_height="180"
             sl:scale_left="260"
             sl:scale_top="200"
             sl:scale_textsize="50"
@@ -217,9 +220,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@drawable/btn_cancle"
+            android:text="취소"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:background="@drawable/btn_round"
             android:foreground="?attr/selectableItemBackground"
-            sl:scale_height="270"
+            sl:scale_height="180"
             sl:scale_left="700"
             sl:scale_textsize="50"
             sl:scale_width="300" />

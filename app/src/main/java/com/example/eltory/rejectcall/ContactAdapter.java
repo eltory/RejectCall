@@ -3,6 +3,7 @@ package com.example.eltory.rejectcall;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
     private ArrayList<ContactItem> objList;
     private ArrayList<ContactItem> filteredItemList;
     Filter listFilter;
+    boolean isEntering = false;
 
     ContactAdapter() {
         contactItemList = new ArrayList<>();
@@ -69,32 +71,20 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
             phoneNumber.setText(contactItem.getPhoneNumber());
             check.setChecked(contactItem.getCheck());
         }
+        if (isEntering == false)
+            check.setVisibility(View.INVISIBLE);
+        else {
+            check.setVisibility(View.VISIBLE);
+        }
 
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                filteredItemList.get(position).setCheck(true);
-                if (check.getVisibility() == View.INVISIBLE)
-                    check.setChecked(true);
-                check.setVisibility(View.VISIBLE);
-                setVisibleCheck(v);
-                return false;
-            }
-        });
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (check.isChecked()) {
-                    filteredItemList.get(position).setCheck(true);
-                    if (!ContactsManager.getInstance().isExceptedList(context, contactItemList.get(position).getPhoneNumber()))
-                        objList.add(contactItem);
-                } else {
-                    filteredItemList.get(position).setCheck(false);
-                    objList.remove(contactItem);
-                }
-            }
-        });
         return view;
+    }
+
+    public void addToList(ContactItem contactItem){
+        objList.add(contactItem);
+    }
+    public void removeFromList(ContactItem contactItem){
+        objList.remove(contactItem);
     }
 
     public void setVisibleCheck(View view
@@ -111,6 +101,13 @@ public class ContactAdapter extends BaseAdapter implements Filterable {
                         //view.setVisibility(View.GONE);
                     }
                 });
+    }
+
+    public void isEnter(int i) {
+        if (i == 1)
+            isEntering = true;
+        else
+            isEntering = false;
     }
 
     public void addItem(ArrayList<ContactItem> contactItemList) {

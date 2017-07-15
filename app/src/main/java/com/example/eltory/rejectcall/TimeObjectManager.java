@@ -45,12 +45,13 @@ public class TimeObjectManager {
     }
 
     /*  Return the time from start to end  */
-    public String getStartEndTime(int requestCode) {
-        return simpleFormat.format(new Date(findTimeObj(requestCode).getStartTime())) + "/" + simpleFormat.format(new Date(findTimeObj(requestCode).getEndTime()));
+    public String getStartEndTime(Context context, int requestCode) {
+        return simpleFormat.format(new Date(findTimeObj(context, requestCode).getStartTime())) + "/" + simpleFormat.format(new Date(findTimeObj(context, requestCode).getEndTime()));
     }
 
     /*  Distinguish from the list by request code  */
-    public TimeObj findTimeObj(int requestCode) {
+    public TimeObj findTimeObj(Context context, int requestCode) {
+        getTimeObjs(context);
         return this.timeObjs.getTimeObj(requestCode);
     }
 

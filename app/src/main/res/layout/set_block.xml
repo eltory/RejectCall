@@ -4,12 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layer_layout"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:layout_marginBottom="10dp">
     <TextView
         android:id="@+id/set_block_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:padding="5dp"
         android:text="특정번호로 시작하는 전화번호를 모두 수신거부합니다." />
 
     <LinearLayout
@@ -39,16 +46,21 @@
 
         <Button
             android:id="@+id/addHeadNum"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:background="@color/colorAccent"
+            android:textColor="@android:color/white"
             android:text="추가하기" />
 
     </LinearLayout>
-
-    <ListView
+</LinearLayout>
+    <ListView  android:divider="@null"
+        android:background="@drawable/layer_layout"
+        android:dividerHeight="5dp"
         android:id="@+id/head_number_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

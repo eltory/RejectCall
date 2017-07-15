@@ -37,8 +37,9 @@ import java.util.Set;
 /**
  * Created by eltory on 2017-03-18.
  */
-public class SetExceptNumber extends AppCompatActivity {
+public class SetExceptNumber extends Font {
 
+    // TODO: 예외번호 리스트 디자인이랑, 필터링 디자인, 필터링 화면 제어
     private final Context context = this;
     private ArrayList<ContactItem> list;
     private ListContactObj contactObjs;
@@ -63,6 +64,7 @@ public class SetExceptNumber extends AppCompatActivity {
 
         adapter = new ContactAdapter();
         adapter.addItem(getContactObjs().getList());
+        adapter.isEnter(0);
         listView.setAdapter(adapter);
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -106,11 +108,10 @@ public class SetExceptNumber extends AppCompatActivity {
             public void onClick(View view) {
                 phnum = String.format(PhoneNumberUtils.formatNumber(editExceptNum.getText().toString()));
 
-                if(phnum.equals("")){
+                if (phnum.equals("")) {
                     Toast.makeText(SetExceptNumber.this, "번호를 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                else {
+                } else {
                     if (ContactsManager.getInstance().isExceptedList(context, phnum)) {
 
                     }

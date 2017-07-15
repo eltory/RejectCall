@@ -63,12 +63,15 @@ public class ListViewAdapter extends BaseAdapter {
 
         final TimeObj optionSettingItem = optionSettingList.get(position);
 
-        // TODO : 시간리스트뷰 정리하기
         if (optionSettingItem != null) {
 
             title.setText(simpleFormat.format(new Date(optionSettingItem.getStartTime())) + " ~ " + simpleFormat.format(new Date(optionSettingItem.getEndTime())));
             desc.setText(optionSettingItem.getWeekSet());
             optionSwitch.setChecked(false);
+
+            if(optionSettingItem.isEnd())
+                title.setTextColor(context.getResources().getColor(android.R.color.darker_gray));
+            Log.d("이즈앤드",String.valueOf(optionSettingItem.isEnd()));
         }
         return convertView;
     }

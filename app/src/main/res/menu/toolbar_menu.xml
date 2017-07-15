@@ -6,4 +6,8 @@
         android:id="@+id/info"
         android:icon="@android:drawable/ic_menu_more"
         android:title="info" />
+    <item
+        android:id="@+id/license"
+        android:icon="@android:drawable/ic_menu_more"
+        android:title="license" />
 </menu>

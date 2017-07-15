@@ -36,7 +36,6 @@ public class Permissions extends Activity {
                         , Manifest.permission.CALL_PHONE
                         , Manifest.permission.SEND_SMS
                         , Manifest.permission.READ_CONTACTS
-                        , Manifest.permission.READ_EXTERNAL_STORAGE
                         , Manifest.permission.READ_CALL_LOG
                 ).check();
     }

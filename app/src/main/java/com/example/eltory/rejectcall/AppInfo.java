@@ -17,10 +17,11 @@ import butterknife.BindView;
 /**
  * Created by eltory on 2017-04-23.
  */
-public class AppInfo extends AppCompatActivity {
-
+public class AppInfo extends Font {
+    // TODO: 업데이트 레이아웃 제대로 바꾸고 개발자 정보 넣기
     public String cVersion;
     public String lVersion;
+    private Button sendEmail;
     TextView currVersion;
     TextView latestVersion;
     Button update;
@@ -36,9 +37,8 @@ public class AppInfo extends AppCompatActivity {
         currVersion = (TextView) findViewById(R.id.current_version);
         latestVersion = (TextView) findViewById(R.id.lately_version);
         update = (Button) findViewById(R.id.update);
-
         currVersion.setText("현재 버전 : " + cVersion);
-        latestVersion.setText("최신 버젼 : " + lVersion);
+        latestVersion.setText("최신 버전 : " + lVersion);
 
         // 최신버전으로 업데이트 하기
         update.setOnClickListener(new View.OnClickListener() {
@@ -48,8 +48,8 @@ public class AppInfo extends AppCompatActivity {
                     Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
                     marketLaunch.setData(Uri.parse("market://search?q=" + getPackageName()));
                     startActivity(marketLaunch);
-                }else{
-                    Toast.makeText(AppInfo.this,"이미 최신버전 입니다!",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AppInfo.this, "이미 최신버전 입니다!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

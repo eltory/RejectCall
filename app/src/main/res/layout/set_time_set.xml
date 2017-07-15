@@ -18,16 +18,28 @@
             sl:scale_base_height="1940"
             sl:scale_base_width="1280">
 
-            <ListView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@null"
+                android:gravity="center"
+                android:text="설정된 시간이 없습니다."
+                sl:scale_height="1840"
+                sl:scale_textsize="55"
+                sl:scale_width="1280"
+                android:id="@+id/not_time_list"
+                />
+
+            <ListView
                 android:id="@+id/time_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="@null"
                 android:divider="@null"
                 android:dividerHeight="4dp"
                 sl:scale_height="1840"
-                sl:scale_width="1180" />
+                sl:scale_width="1280" />
         </com.ssomai.android.scalablelayout.ScalableLayout>
 
         <com.ssomai.android.scalablelayout.ScalableLayout
@@ -52,6 +64,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="bottom"
+                    android:backgroundTint="@android:color/holo_green_dark"
                     android:src="@drawable/ic_alarm_add_white_24dp" />
             </RelativeLayout>
 

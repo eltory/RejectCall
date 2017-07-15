@@ -167,15 +167,13 @@ public class ContactsManager {
 
     public boolean isHeadNumber(Context context, String phoneNumber) {
         SharedPreferences pref_head_num = context.getSharedPreferences("HeadNum", context.MODE_PRIVATE);
-        Set headNumSet = pref_head_num.getStringSet("headNumSet", null);
+        Set<String> headNumSet = pref_head_num.getStringSet("headNumSet", null);
 
         if (headNumSet != null) {
             
             Iterator iterator = headNumSet.iterator();
-            Log.d("진입번호", String.valueOf(phoneNumber));
 
             while (iterator.hasNext()) {
-                Log.d("헤드번호", (String) iterator.next());
                 if (phoneNumber.startsWith((String) iterator.next()))
                     return true;
             }

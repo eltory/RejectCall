@@ -28,6 +28,7 @@ import butterknife.BindView;
  */
 public class PopUpTest extends Activity {
 
+
     @BindView(R.id.tv_content)
     TextView tvCont;
     private UnansweredListAdapter adapter;

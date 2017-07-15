@@ -1,27 +1,21 @@
 package com.example.eltory.rejectcall;
 
-import android.app.Activity;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import android.widget.ToggleButton;
-
-import com.example.eltory.rejectcall.R;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import butterknife.BindView;
 
 /**
  * Created by eltory on 2017-04-23.
@@ -72,8 +66,9 @@ public class SetTimeObject extends Font {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setAlarm();
-                finish();
+                if (setAlarm()) {
+                    finish();
+                }
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -84,21 +79,34 @@ public class SetTimeObject extends Font {
         });
     }
 
-    public void setAlarm() {
+    public boolean setAlarm() {
+        if ((toggleSun.isChecked() || toggleMon.isChecked() || toggleTue.isChecked() ||
+                toggleWed.isChecked() || toggleThu.isChecked() || toggleFri.isChecked() || toggleSat.isChecked()) == false) {
+            Toast.makeText(SetTimeObject.this, "요일을 선택해 주세요!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         cal = Calendar.getInstance();
 
         requestCode = new int[]{(int) System.currentTimeMillis(), (int) System.currentTimeMillis() + 1};
         Log.d("시작", String.valueOf(requestCode[0]));
         Log.d("종료", String.valueOf(requestCode[1]));
+
         // 시작
         setTime(cal, start);
         startTime = cal.getTimeInMillis();
+        if (startTime == endTime) {
+            Toast.makeText(SetTimeObject.this, "시작시간과 종료시간이 같습니다.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         onRegisterAlarm(requestCode[0], true);
+
         // 종료
         setTime(cal, end);
         endTime = cal.getTimeInMillis();
+
         onRegisterAlarm(requestCode[1], false);
         TimeObjectManager.getInstance().addTimeObj(makeTimeObj());
+        return true;
     }
 
     /*  Register an alarm for setting options */
@@ -112,7 +120,7 @@ public class SetTimeObject extends Font {
             setDay(i, b);
             i++;
         }
-        intent.putExtra("isRepeat",isRepeat);
+        intent.putExtra("isRepeat", isRepeat);
         intent.putExtra("week", weekSet);
         intent.putExtra("isOn", isOn);
         intent.putExtra("time", requestCode);
@@ -128,12 +136,6 @@ public class SetTimeObject extends Font {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pIntent);
             }
         }
-    }
-
-    /*  Unregister an alarm  */
-    private void onUnregisterAlarm(int requestCode) {
-        pIntent = PendingIntent.getBroadcast(this, requestCode, intent, 0);
-        alarmManager.cancel(pIntent);
     }
 
     /*  Set start & End time  */
@@ -160,13 +162,8 @@ public class SetTimeObject extends Font {
         timeObj.setEndTime(endTime);
         timeObj.setWeekSet(weekSet);
         timeObj.setRequestCodeSet(requestCode);
-
+        timeObj.setRepeat(repeatSwitch.isChecked());
         return timeObj;
-    }
-
-    // TODO: repeat 설정하기
-    public void repeatAlarm() {
-
     }
 
     public void setDay(int day, boolean set) {

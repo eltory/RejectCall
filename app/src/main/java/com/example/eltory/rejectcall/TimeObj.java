@@ -13,6 +13,7 @@ public class TimeObj {
     private long endTime;
     private boolean repeat = false;
     private int[] requestCodeSet;
+    private boolean isEnd = false;
     //SimpleDateFormat simpleFormat = new SimpleDateFormat("HH:mm");
 
     TimeObj() {
@@ -22,6 +23,9 @@ public class TimeObj {
         this.weekSet = weekSet;
     }
 
+    public int getWeek(){
+        return this.weekSet;
+    }
     public String getWeekSet() {
         String days = "";
 
@@ -70,16 +74,20 @@ public class TimeObj {
         return this.repeat;
     }
 
-    public boolean isRepeat() {
-        return repeat;
-    }
-
     public void setRequestCodeSet(int[] requestCodeSet) {
         this.requestCodeSet = requestCodeSet;
     }
 
     public int[] getRequestCodeSet() {
         return requestCodeSet;
+    }
+
+    public void setEnd(boolean end) {
+        isEnd = end;
+    }
+
+    public boolean isEnd() {
+        return this.isEnd;
     }
 
     public boolean getDay(int day) {

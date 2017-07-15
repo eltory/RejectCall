@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,8 +20,11 @@ import java.util.Set;
 /**
  * Created by eltor on 2017-06-12.
  */
-public class SetBlock extends AppCompatActivity {
+public class SetBlock extends Font {
 
+    // TODO: 모든 디자인 스칼라로 바꾸기
+
+    // TODO : 헤드번호 제대로 블록시키고 나머지 디자인 수정
     SharedPreferences pref_head_num;
     SharedPreferences.Editor editor;
     EditText editHeadNumber;
@@ -60,7 +64,7 @@ public class SetBlock extends AppCompatActivity {
                         .setPositiveButton("예", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                inSet.remove(index);
+                                inSet.remove(adapter.getItem(index));
                                 setListView();
                                 editor.putStringSet("headNumSet", inSet).commit();
                             }
@@ -80,6 +84,10 @@ public class SetBlock extends AppCompatActivity {
         addHeadNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(editHeadNumber.getText().toString().equals("")){
+                    Toast.makeText(SetBlock.this, "번호를 입력하세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 inSet.add(editHeadNumber.getText().toString());
                 setListView();
                 editHeadNumber.setText("");
@@ -92,7 +100,12 @@ public class SetBlock extends AppCompatActivity {
     public void setListView() {
         arr = inSet.toArray(new String[inSet.size()]);
         adapter = new ArrayAdapter(SetBlock.this, android.R.layout.simple_list_item_1, arr);
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+                listView.setAdapter(adapter);
+            }
+        });
     }
 }
