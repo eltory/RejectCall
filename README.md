@@ -1,5 +1,7 @@
 # RejectCall
-### ( Named "바나나콜" on android market )<br> https://play.google.com/store/apps/details?id=com.lsh.rejectcall 
+### ( Named "바나나콜" on android market )<br> Go to market <br> https://play.google.com/store/apps/details?id=com.lsh.rejectcall <br> or
+![Art text](https://user-images.githubusercontent.com/20057558/30155679-694344d0-93f8-11e7-9035-6b72194cc205.png)
+
 * This application is to reject incoming call automatically
 ![Art text](https://user-images.githubusercontent.com/20057558/30099619-3be04a74-9321-11e7-9a18-aa865efd3002.jpeg)
 
